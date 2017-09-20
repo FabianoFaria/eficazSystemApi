@@ -15,9 +15,9 @@ class ContatoController extends Controller
     protected $respose;
 
 
-    public function __construct(Response $response)
+    public function __construct(Contato $contato)
     {
-        $this->response = $response;
+        $this->contato = $contato;
     }
 
 
@@ -49,6 +49,8 @@ class ContatoController extends Controller
     public function create()
     {
         //
+        return "Bem vindo ao metódo create contato!";
+
     }
 
     /**

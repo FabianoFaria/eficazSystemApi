@@ -18,15 +18,20 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 
-// // get list of Contato
-// Route::get('contatos','ContatoController@index');
-// // get specific Contato
-// Route::get('contato/{id}','ContatoController@show');
-// // delete a Contato
-// Route::delete('contato/{id}','ContatoController@destroy');
-// // update existing Contato
-// Route::put('contato','ContatoController@store');
-// // create new Contato
-// Route::post('contato','ContatoController@store');
+// get list of Contato
+Route::get('contatos','ContatoController@index');
+// get specific Contato
+Route::get('contato/{id}','ContatoController@show');
+// delete a Contato
+Route::delete('contato/{id}','ContatoController@destroy');
+// update existing Contato
+Route::put('contato','ContatoController@store');
+// create new Contato
+Route::post('contato','ContatoController@store');
 
-Route::resource('contatos', 'ContatoController');
+// Criar novo contato
+Route::post('criarContato','ContatoController@store');
+//Route::resource('contatos', 'ContatoController');
+// Editar Contato existente
+Route::put('editarContato','ContatoController@update');
+

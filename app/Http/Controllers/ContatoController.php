@@ -150,48 +150,82 @@ class ContatoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id ='')
+    public function update(Request $request, $id)
     {
         //
+        $rules = array(
+            'Nome'              => 'required',
+            'Email'             => 'required|email',
+            'Data_Nascimento'   => 'required|date_format:Y-m-d',
+            'Cpf_Cnpj'          => 'required'
+        );
 
-        $input = $request->all();
-        // $rules = array(
-        //     'Nome'              => 'required',
-        //     'Email'             => 'required|email',
-        //     'Data_Nascimento'   => 'required|date_format:Y-m-d',
-        //     'Cpf_Cnpj'          => 'required',
+        
+
+        $validator = Validator::make($request->all(), $rules);
+
+        
+
+        // $validation = Validator::make(
+        //     array(
+        //         'Nome'              => $request->get('Nome'),
+        //         'Email'             => $request->get('Email'),
+        //         'Data_Nascimento'   => $request->get('Data_Nascimento'),
+        //         'Cpf_Cnpj'          => $request->get( 'Cpf_Cnpj' )
+        //     ),
+        //     array(
+        //         'Nome'              => array( 'required' ),
+        //         'Email'             => array( 'required', 'email' ),
+        //         'Data_Nascimento'   => array( 'required', 'date_format:Y-m-d' ),
+        //         'Cpf_Cnpj'          => array( 'required' )
+        //     )
         // );
 
-        //dd($request->all());
+        // if ( $validation->fails() ) {
+        //     $errors = $validation->messages();
 
-        // $validator = Validator::make($request->all(), $rules);
+        //     dd($errors);
+        // }
 
-        // if( $validator->fails()){
 
-        //     //return Redirect::back()->withInput()->withErrors($this->contato->errors);
-        //     return response()->json($this->contato->errors, 400);
 
-        // }else{
 
-            $contatos = Contato::find($request->get('Cadastro_ID'));
+        if( $validator->fails()){
 
-            dd($input);
+            //return Redirect::back()->withInput()->withErrors($this->contato->errors);
+            return response()->json($this->contato->errors, 400);
 
-            $contatos->save();
+        }else{
+
+            
+
+            //dd($validator);
+
+            $contatos = Contato::find($id);
 
 
             // $this->contato->Cadastro_ID     =  Contato::find($request->get('Cadastro_ID'));
-            // $this->contato->Nome            = $request->get('Nome');
-            // $this->contato->Nome_Fantasia   = $request->get('Nome_Fantasia');
-            // $this->contato->Email           = $request->get('Email');
-            // $this->contato->cpf_cnpj        = $request->get('Cpf_Cnpj');
-            // $this->contato->Data_Nascimento = $request->get('Data_Nascimento');
+            $contatos->Nome            = $request->get('Nome');
+            $contatos->Nome_Fantasia   = $request->get('Nome_Fantasia');
+            $contatos->Email           = $request->get('Email');
+            $contatos->cpf_cnpj        = $request->get('Cpf_Cnpj');
 
-            // $this->contato->save();
+             //Dados que terão dados configurados por padrão
+            if(strlen($request->get('Cpf_Cnpj')) == 11){
+                //Contato é uma pessoa física
+                $contatos->Tipo_Pessoa         = 24;
+            }else{
+                //Contato é uma pessoa juridica
+                $contatos->Tipo_Pessoa         = 25;
+            } 
+            
+            $contatos->Data_Nascimento = $request->get('Data_Nascimento');
 
-            return response()->json($this->contatos, 201);
+            $contatos->save();
 
-        //}
+            return response()->json($contatos, 201);
+
+        }
 
     }
 

@@ -33,5 +33,7 @@ Route::post('contato','ContatoController@store');
 Route::post('criarContato','ContatoController@store');
 //Route::resource('contatos', 'ContatoController');
 // Editar Contato existente
-Route::put('editarContato','ContatoController@update');
+Route::put('editarContato/{id}','ContatoController@update');
+// Cadastrar novo telefone para contato
+Route::post('criarTelefoneContato','ContatoTelefoneController@store');
 

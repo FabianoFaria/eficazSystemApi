@@ -34,6 +34,18 @@ Route::post('criarContato','ContatoController@store');
 //Route::resource('contatos', 'ContatoController');
 // Editar Contato existente
 Route::put('editarContato/{id}','ContatoController@update');
+
 // Cadastrar novo telefone para contato
 Route::post('criarTelefoneContato','ContatoTelefoneController@store');
+// Editar Telefone de Contato
+Route::put('editarTelefoneContato/{id}','ContatoTelefoneController@update');
+// Remover Telefone de Contato
+Route::delete('removerTelefoneContato/{id}','ContatoTelefoneController@destroy');
 
+
+// Cadastrar novo endereco para contato
+Route::post('criarEnderecoContato','ContatoEnderecoController@store');
+// Editar endereco de contato
+Route::put('editarEnderecoContato/{id}','ContatoEnderecoController@update');
+// Remover endereco de Contato
+Route::delete('removerEnderecoContato/{id}','ContatoEnderecoController@destroy');

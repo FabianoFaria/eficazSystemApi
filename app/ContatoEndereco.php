@@ -5,26 +5,29 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 
-
-class ContatoTelefone extends Model
+class ContatoEndereco extends Model
 {
-
+ 	
 	/**
 	* The database table used by the model.
 	*
 	* @var string
 	*/
-	protected $table 		= 'cadastros_telefones';
+	protected $table 		= 'cadastros_enderecos';
 
-	protected $primaryKey 	= 'Cadastro_Telefone_ID';
+	protected $primaryKey 	= 'Cadastro_Endereco_ID';
 
 	public $timestamps 		= false;
 
-	protected $fillable 	= ['Cadastro_ID', 'Telefone', 'Observacao'];
+	protected $fillable 	= ['Logradouro','Numero','Complemento','Bairro','Cidade','UF', 'CEP'];
 
 	public static $rules 	= array(
-    	'Telefone'=> 'required|numeric|min:8'
-    );
+		'Logradouro'=> 'required|min:2',
+        'Bairro'=> 'required|min:2',
+    	'Cidade'=>'required',
+    	'UF'=>'required',
+    	'CEP'=>'required|min:8|max:9'
+	);
 
 	public $errors;
 

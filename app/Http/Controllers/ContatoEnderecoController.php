@@ -150,5 +150,10 @@ class ContatoEnderecoController extends Controller
     public function destroy($id)
     {
         //
+        $endereco   = ContatoEndereco::find($id);
+
+        $endereco->delete();
+
+        return response()->json(201);
     }
 }

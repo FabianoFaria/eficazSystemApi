@@ -42,10 +42,15 @@ Route::put('editarTelefoneContato/{id}','ContatoTelefoneController@update');
 // Remover Telefone de Contato
 Route::delete('removerTelefoneContato/{id}','ContatoTelefoneController@destroy');
 
-
 // Cadastrar novo endereco para contato
 Route::post('criarEnderecoContato','ContatoEnderecoController@store');
 // Editar endereco de contato
 Route::put('editarEnderecoContato/{id}','ContatoEnderecoController@update');
 // Remover endereco de Contato
 Route::delete('removerEnderecoContato/{id}','ContatoEnderecoController@destroy');
+
+
+// Cadastro de novo orçamento
+Route::post('criarNovoOrcamentoCliente','OrcamentoController@store');
+// Recupera status do orçamento
+Route::get('statusOrcamentoCliente/{id}','OrcamentoController@show');

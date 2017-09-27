@@ -82,7 +82,7 @@ class ContatoEnderecoController extends Controller
      */
     public function show($id)
     {
-        //
+        // 
     }
 
     /**

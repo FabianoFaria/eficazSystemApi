@@ -54,3 +54,5 @@ Route::delete('removerEnderecoContato/{id}','ContatoEnderecoController@destroy')
 Route::post('criarNovoOrcamentoCliente','OrcamentoController@store');
 // Recupera status do orçamento
 Route::get('statusOrcamentoCliente/{id}','OrcamentoController@show');
+// Recupera dados mais completos do orçamento
+Route::get('orcamentoClienteDetalhado/{id}','OrcamentoController@orcamentoDetalhado');

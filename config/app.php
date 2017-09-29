@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,6 +53,8 @@ return [
 
     //'url' => env('APP_URL', 'http://localhost'),
     'url' => env('APP_URL', 'http://eficazsystem.com.api/'),
+    //'url' => env('APP_URL', 'http://api.eficazsystem.com.br/'),
+
 
     /*
     |--------------------------------------------------------------------------

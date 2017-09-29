@@ -142,6 +142,44 @@ class OrcamentoController extends Controller
         */
     }
 
+
+    /**
+     * Carrega os dados detalhados do orçamento especificado
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function orcamentoDetalhado($id)
+    {
+        //
+        $statusOrcamento    = DB::table('orcamentos_workflows')
+                                ->join('tipo', 'orcamentos_workflows.Situacao_ID', '=', 'tipo.Tipo_ID')
+                                ->join('cadastros_dados', 'orcamentos_workflows.Solicitante_ID', '=', 'cadastros_dados.Cadastro_ID')
+                                ->select('orcamentos_workflows.Empresa_ID', 
+                                    'orcamentos_workflows.Solicitante_ID', 
+                                    'orcamentos_workflows.Representante_ID',
+                                    'orcamentos_workflows.Situacao_ID',
+                                    'orcamentos_workflows.Codigo',
+                                    'orcamentos_workflows.Titulo',
+                                    'orcamentos_workflows.Data_Abertura',
+                                    'orcamentos_workflows.Data_Finalizado',
+                                    'orcamentos_workflows.Data_Cadastro',
+                                    'orcamentos_workflows.Usuario_Cadastro_ID',
+                                    'tipo.Descr_Tipo as Situacao',
+                                    'cadastros_dados.Nome'
+                                )
+                                ->where('Workflow_ID', '=', $id)
+                                ->first();
+
+        if(empty($statusOrcamento)){
+            return response()->json(null, 200);
+        }else{
+            return response()->json($statusOrcamento, 200);
+        }
+
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

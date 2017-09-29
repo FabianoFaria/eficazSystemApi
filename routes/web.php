@@ -12,5 +12,6 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    return Redirect::to('https://parcerias.eficazsystem.com.br');
 });

@@ -153,22 +153,23 @@ class OrcamentoController extends Controller
     {
         //
         $statusOrcamento    = DB::table('orcamentos_workflows')
-                                ->join('tipo', 'orcamentos_workflows.Situacao_ID', '=', 'tipo.Tipo_ID')
-                                ->join('cadastros_dados', 'orcamentos_workflows.Solicitante_ID', '=', 'cadastros_dados.Cadastro_ID')
-                                ->select('orcamentos_workflows.Empresa_ID', 
-                                    'orcamentos_workflows.Solicitante_ID', 
-                                    'orcamentos_workflows.Representante_ID',
-                                    'orcamentos_workflows.Situacao_ID',
-                                    'orcamentos_workflows.Codigo',
-                                    'orcamentos_workflows.Titulo',
-                                    'orcamentos_workflows.Data_Abertura',
+                                ->leftJoin('orcamentos_propostas', 'orcamentos_workflows.Workflow_ID', '=', 'orcamentos_propostas.Workflow_ID')
+                                ->leftJoin('tipo', 'tipo.Tipo_ID', '=', 'orcamentos_propostas.Status_ID')
+                                ->leftJoin('orcamentos_propostas_produtos', 'orcamentos_propostas_produtos.Proposta_ID', '=', 'orcamentos_propostas.Proposta_ID')
+                                ->select('orcamentos_workflows.Workflow_ID',
+                                    'orcamentos_workflows.Titulo as Orc_titulo',
+                                    'orcamentos_propostas.Proposta_ID',
+                                    'orcamentos_propostas.Titulo',
+                                    'tipo.Descr_Tipo as Status',
                                     'orcamentos_workflows.Data_Finalizado',
-                                    'orcamentos_workflows.Data_Cadastro',
-                                    'orcamentos_workflows.Usuario_Cadastro_ID',
-                                    'tipo.Descr_Tipo as Situacao',
-                                    'cadastros_dados.Nome'
+                                    DB::raw('sum((orcamentos_propostas_produtos.Quantidade * orcamentos_propostas_produtos.Valor_Venda_Unitario)) as totalServico')
                                 )
-                                ->where('Workflow_ID', '=', $id)
+                                ->where([
+                                    ['orcamentos_workflows.Workflow_ID', '=', $id],
+                                    ['orcamentos_propostas.Situacao_ID', '=', '1'],
+                                    ['orcamentos_propostas_produtos.Situacao_ID', '=', '1'],
+                                ])
+                                ->groupBy('orcamentos_propostas.Proposta_ID')
                                 ->first();
 
         if(empty($statusOrcamento)){
@@ -177,8 +178,8 @@ class OrcamentoController extends Controller
             return response()->json($statusOrcamento, 200);
         }
 
-
     }
+
 
     /**
      * Show the form for editing the specified resource.

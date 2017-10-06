@@ -102,6 +102,7 @@ class OrcamentoController extends Controller
 
         $statusOrcamento    = DB::table('orcamentos_workflows')
                                 ->join('tipo', 'orcamentos_workflows.Situacao_ID', '=', 'tipo.Tipo_ID')
+                                ->join('cadastros_dados','cadastros_dados.Cadastro_ID','=','orcamentos_workflows.Solicitante_ID')
                                 ->select('orcamentos_workflows.Empresa_ID', 
                                     'orcamentos_workflows.Solicitante_ID', 
                                     'orcamentos_workflows.Representante_ID',
@@ -112,7 +113,8 @@ class OrcamentoController extends Controller
                                     'orcamentos_workflows.Data_Finalizado',
                                     'orcamentos_workflows.Data_Cadastro',
                                     'orcamentos_workflows.Usuario_Cadastro_ID',
-                                    'tipo.Descr_Tipo as Situacao'
+                                    'tipo.Descr_Tipo as Situacao',
+                                    'cadastros_dados.Nome'
                                 )
                                 ->where('Workflow_ID', '=', $id)
                                 ->first();
@@ -154,7 +156,7 @@ class OrcamentoController extends Controller
         //
         $statusOrcamento    = DB::table('orcamentos_workflows')
                                 ->leftJoin('orcamentos_propostas', 'orcamentos_workflows.Workflow_ID', '=', 'orcamentos_propostas.Workflow_ID')
-                                ->leftJoin('tipo', 'tipo.Tipo_ID', '=', 'orcamentos_propostas.Status_ID')
+                                ->leftJoin('tipo', 'tipo.Tipo_ID', '=', 'orcamentos_workflows.Situacao_ID')
                                 ->leftJoin('orcamentos_propostas_produtos', 'orcamentos_propostas_produtos.Proposta_ID', '=', 'orcamentos_propostas.Proposta_ID')
                                 ->select('orcamentos_workflows.Workflow_ID',
                                     'orcamentos_workflows.Titulo as Orc_titulo',
@@ -168,11 +170,12 @@ class OrcamentoController extends Controller
                                     ['orcamentos_workflows.Workflow_ID', '=', $id],
                                     ['orcamentos_propostas.Situacao_ID', '=', '1'],
                                     ['orcamentos_propostas_produtos.Situacao_ID', '=', '1'],
+                                    ['orcamentos_workflows.Situacao_ID', '=', '113'],
                                 ])
-                                ->groupBy('orcamentos_propostas.Proposta_ID')
+                                ->groupBy('orcamentos_propostas.Proposta_ID') 
                                 ->first();
 
-        if(empty($statusOrcamento)){
+        if(empty($statusOrcamento)){  
             return response()->json(null, 200);
         }else{
             return response()->json($statusOrcamento, 200);

@@ -182,6 +182,8 @@ class OrcamentoController extends Controller
                                 ->leftJoin('orcamentos_propostas', 'orcamentos_propostas_vencimentos.Proposta_ID', '=','orcamentos_propostas.Proposta_ID')
                                 ->leftJoin('orcamentos_workflows', 'orcamentos_propostas.Workflow_ID','=','orcamentos_workflows.Workflow_ID')
                                 ->leftJoin('orcamentos_propostas_produtos','orcamentos_propostas_produtos.Proposta_ID','=','orcamentos_propostas.Proposta_ID')
+                                ->leftJoin('tipo','tipo.Tipo_ID','=','orcamentos_workflows.Situacao_ID')
+                                ->leftJoin('tipo as tpPgm','tpPgm.Tipo_ID','=','orcamentos_propostas.Forma_Pagamento_ID')
                                 ->select(
                                     'orcamentos_workflows.Titulo',
                                     'orcamentos_workflows.Data_Finalizado',
@@ -189,7 +191,10 @@ class OrcamentoController extends Controller
                                     'orcamentos_propostas.Forma_Pagamento_ID',
                                     'orcamentos_propostas_vencimentos.Data_Vencimento',
                                     'orcamentos_propostas_vencimentos.Dias_Vencimento',
-                                    'orcamentos_propostas_vencimentos.Valor_Vencimento'
+                                    'orcamentos_propostas_vencimentos.Valor_Vencimento',
+                                    'orcamentos_propostas_vencimentos.Valor_Vencimento as totalServico',
+                                    'tipo.Descr_Tipo as Status',
+                                    'tpPgm.Descr_Tipo as tipoPagamento'
                                 )
                                 ->where([
                                         ['orcamentos_workflows.Workflow_ID','=', $id],
@@ -201,7 +206,8 @@ class OrcamentoController extends Controller
                                         'orcamentos_propostas.Proposta_ID', 
                                         'orcamentos_propostas_vencimentos.Data_Vencimento',
                                         'orcamentos_propostas_vencimentos.Dias_Vencimento',
-                                        'orcamentos_propostas_vencimentos.Valor_Vencimento'
+                                        'orcamentos_propostas_vencimentos.Valor_Vencimento',
+                                        'tipo.Descr_Tipo'
                                         ) 
                                 ->first();
         /*

@@ -185,6 +185,7 @@ class OrcamentoController extends Controller
                                 ->leftJoin('tipo','tipo.Tipo_ID','=','orcamentos_workflows.Situacao_ID')
                                 ->leftJoin('tipo as tpPgm','tpPgm.Tipo_ID','=','orcamentos_propostas.Forma_Pagamento_ID')
                                 ->select(
+                                    'orcamentos_workflows.Workflow_ID',
                                     'orcamentos_workflows.Titulo',
                                     'orcamentos_workflows.Data_Finalizado',
                                     'orcamentos_propostas.Proposta_ID',

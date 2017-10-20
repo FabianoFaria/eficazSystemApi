@@ -57,6 +57,7 @@ class ContatoEnderecoController extends Controller
             $this->ContatoEndereco->Cadastro_ID             = $request->get('Cadastro_ID');
             $this->ContatoEndereco->Tipo_Endereco_ID        = 26;
             $this->ContatoEndereco->CEP                     = $request->get('CEP');
+            
             $this->ContatoEndereco->Logradouro              = $request->get('Logradouro');
             $this->ContatoEndereco->Numero                  = $request->get('Numero');
             $this->ContatoEndereco->Complemento             = $request->get('Complemento');

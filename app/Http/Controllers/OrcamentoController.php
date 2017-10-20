@@ -203,12 +203,17 @@ class OrcamentoController extends Controller
                                         ['orcamentos_propostas.Situacao_ID','=','1'],
                                         ['orcamentos_propostas_produtos.Situacao_ID','=','1']
                                     ])
-                                ->groupBy('orcamentos_workflows.Titulo',
-                                        'orcamentos_propostas.Proposta_ID', 
+                                ->groupBy(
+                                        'orcamentos_workflows.Workflow_ID',
+                                        'orcamentos_workflows.Titulo',
+                                        'orcamentos_workflows.Data_Finalizado',
+                                        'orcamentos_propostas.Proposta_ID',
+                                        'orcamentos_propostas.Forma_Pagamento_ID',
                                         'orcamentos_propostas_vencimentos.Data_Vencimento',
                                         'orcamentos_propostas_vencimentos.Dias_Vencimento',
                                         'orcamentos_propostas_vencimentos.Valor_Vencimento',
-                                        'tipo.Descr_Tipo'
+                                        'tipo.Descr_Tipo',
+                                        'tpPgm.Descr_Tipo'
                                         ) 
                                 ->first();
         /*

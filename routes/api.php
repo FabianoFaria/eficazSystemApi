@@ -56,3 +56,9 @@ Route::post('criarNovoOrcamentoCliente','OrcamentoController@store');
 Route::get('statusOrcamentoCliente/{id}','OrcamentoController@show');
 // Recupera dados mais completos do orçamento
 Route::get('orcamentoClienteDetalhado/{id}','OrcamentoController@orcamentoDetalhado');
+
+
+// Cadastro de parceiros 
+Route::post('criarParceiro','ParceirosController@store');
+// Editar nome de parceiro
+Route::put('editarParceiro/{id}','ParceirosController@update');

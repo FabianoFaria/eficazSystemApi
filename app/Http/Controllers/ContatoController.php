@@ -77,11 +77,14 @@ class ContatoController extends Controller
         }else{
 
 
-            $this->contato->Nome = $request->get('Nome');
-            $this->contato->Nome_Fantasia = $request->get('Nome_Fantasia');
-            $this->contato->Email = $request->get('Email');
-            $this->contato->cpf_cnpj = $request->get('Cpf_Cnpj');
-            $this->contato->Data_Nascimento = $request->get('Data_Nascimento');
+            $this->contato->Nome                    = $request->get('Nome');
+            $this->contato->Nome_Fantasia           = $request->get('Nome_Fantasia');
+            $this->contato->Email                   = $request->get('Email');
+            $this->contato->cpf_cnpj                = $request->get('Cpf_Cnpj');
+            $this->contato->Data_Nascimento         = $request->get('Data_Nascimento');
+
+            $this->contato->Origem_ID               = 1375;
+            $this->contato->Parceiro_Origem_ID      = $request->get('parceiro_sistema');
 
             //Dados que terão dados configurados por padrão
             if(strlen($request->get('Cpf_Cnpj')) == 11){

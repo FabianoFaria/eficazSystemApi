@@ -156,7 +156,7 @@ class ContatoController extends Controller
                                 ->where([
                                         ['cadastros_dados.Parceiro_Origem_ID','=', $id]
                                     ])
-                                ->first();
+                                ->get();
 
         if(empty($indicacoes)){  
             return response()->json(null, 200);

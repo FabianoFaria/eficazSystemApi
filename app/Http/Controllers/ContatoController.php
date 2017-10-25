@@ -149,7 +149,7 @@ class ContatoController extends Controller
                                 ->select(
                                     'cadastros_dados.Cadastro_ID',
                                     'cadastros_dados.Nome',
-                                    'cadastros_dados.nome_fantasia_cliente',
+                                    'cadastros_dados.Nome_Fantasia',
                                     'cadastros_dados.Cpf_Cnpj',
                                     'cadastros_dados.Email',
                                     'cadastros_dados.Data_Inclusao'

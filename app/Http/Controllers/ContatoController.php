@@ -133,6 +133,13 @@ class ContatoController extends Controller
     public function show($id)
     {
         //
+        $indicacao      = Contato::find($id);
+
+        if(empty($indicacao)){  
+            return response()->json(null, 200);
+        }else{
+            return response()->json($indicacao, 200);
+        }
     }
 
 

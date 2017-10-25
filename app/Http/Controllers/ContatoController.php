@@ -145,7 +145,7 @@ class ContatoController extends Controller
     public function listarIndicacoesParceiros($id)
     {
         //
-        $indicãcoes   = DB::table('cadastros_dados')
+        $indicacoes     = DB::table('cadastros_dados')
                                 ->select(
                                     'cadastros_dados.Cadastro_ID',
                                     'cadastros_dados.Nome',
@@ -155,12 +155,13 @@ class ContatoController extends Controller
                                 )
                                 ->where([
                                         ['cadastros_dados.Parceiro_Origem_ID','=', $id]
-                                    ]);
+                                    ])
+                                ->first();
 
-        if(empty($indicãcoes)){  
+        if(empty($indicacoes)){  
             return response()->json(null, 200);
         }else{
-            return response()->json($indicãcoes, 200);
+            return response()->json($indicacoes, 200);
         }
 
     }

@@ -34,6 +34,8 @@ Route::post('criarContato','ContatoController@store');
 //Route::resource('contatos', 'ContatoController');
 // Editar Contato existente
 Route::put('editarContato/{id}','ContatoController@update');
+// Listar Contatos
+Route::get('listarContatos/{id}','ContatoController@listarIndicacoesParceiros');
 
 // Cadastrar novo telefone para contato
 Route::post('criarTelefoneContato','ContatoTelefoneController@store');
@@ -62,3 +64,7 @@ Route::get('orcamentoClienteDetalhado/{id}','OrcamentoController@orcamentoDetalh
 Route::post('criarParceiro','ParceirosController@store');
 // Editar nome de parceiro
 Route::put('editarParceiro/{id}','ParceirosController@update');
+
+
+// Listar os orçamentos e ou chamados relacioandos ao parceiro
+Route::get('listarOrcamento/{id}','OrcamentoController@statusOrcamentosParceiro');

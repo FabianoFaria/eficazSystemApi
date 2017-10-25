@@ -135,6 +135,36 @@ class ContatoController extends Controller
         //
     }
 
+
+    /**
+     * Retorna a liste de clientes que foram indicados pelo parceiro.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function listarIndicacoesParceiros($id)
+    {
+        //
+        $indicãcoes   = DB::table('cadastros_dados')
+                                ->select(
+                                    'cadastros_dados.Cadastro_ID',
+                                    'cadastros_dados.Nome',
+                                    'cadastros_dados.Cpf_Cnpj',
+                                    'cadastros_dados.Email',
+                                    'cadastros_dados.Data_Inclusao'
+                                )
+                                ->where([
+                                        ['cadastros_dados.Parceiro_Origem_ID','=', $id]
+                                    ]);
+
+        if(empty($indicãcoes)){  
+            return response()->json(null, 200);
+        }else{
+            return response()->json($indicãcoes, 200);
+        }
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -159,11 +189,11 @@ class ContatoController extends Controller
         $rules = array(
             'Nome'              => 'required',
             'Email'             => 'required|email',
-            'Data_Nascimento'   => 'required|date_format:Y-m-d',
-            'Cpf_Cnpj'          => 'required'
+            'Data_Nascimento'   => 'required|date_format:Y-m-d'
         );
 
-        
+        // Retirado o CPF/CNPJ de campos obrigatorios 
+        // 'Cpf_Cnpj'          => 'required'
 
         $validator = Validator::make($request->all(), $rules);
 

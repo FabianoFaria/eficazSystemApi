@@ -244,6 +244,32 @@ class OrcamentoController extends Controller
 
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function statusOrcamentosParceiro($id)
+    {
+        // 
+        $statusOrcamentos   = '';
+
+        // $statusOrcamentos   = DB::table('orcamentos_propostas_vencimentos')
+        //                          ->where([
+        //                                 ['cadastros_dados.Parceiro_Origem_ID','=', $id],
+        //                                 ['orcamentos_workflows.Situacao_ID','=','113'],
+        //                                 ['orcamentos_propostas.Situacao_ID','=','1'],
+        //                                 ['orcamentos_propostas_produtos.Situacao_ID','=','1']
+        //                             ]);
+
+        if(empty($statusOrcamentos)){  
+            return response()->json(null, 200);
+        }else{
+            return response()->json($statusOrcamentos, 200);
+        }
+    }
+
 
     /**
      * Show the form for editing the specified resource.

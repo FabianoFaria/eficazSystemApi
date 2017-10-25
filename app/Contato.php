@@ -26,8 +26,10 @@ class Contato extends Model
     	'Nome'				=>'required|min:2',
     	'Email'				=>'required|email|unique:cadastros_dados',
     	'Data_Nascimento' 	=> 'required|date_format:Y-m-d',
-    	'Cpf_Cnpj' 			=> 'required|unique:cadastros_dados',
+    	'Cpf_Cnpj' 			=> 'unique:cadastros_dados',
     );
+
+    // Retirado obrigação em informar o cpf/cnpj
 
 	public $errors;
 

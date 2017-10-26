@@ -112,6 +112,24 @@ class ContatoTelefoneController extends Controller
     public function edit($id)
     {
         //
+        $telefone   = DB::table('cadastros_telefones')
+                            ->select(
+                                'cadastros_telefones.Cadastro_Telefone_ID',
+                                'cadastros_telefones.Cadastro_ID',
+                                'cadastros_telefones.Telefone',
+                                'cadastros_telefones.Observacao'
+                            )
+                            ->where([
+                                ['cadastros_telefones.Cadastro_Telefone_ID','=', $id],
+                                ['cadastros_telefones.Situacao_ID','=', '1']
+                            ])
+                            ->get();
+
+        if(empty($telefone)){  
+            return response()->json(null, 200);
+        }else{
+            return response()->json($telefone, 200);
+        }
     }
 
     /**

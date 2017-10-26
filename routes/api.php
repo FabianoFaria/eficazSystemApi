@@ -39,6 +39,8 @@ Route::get('listarContatos/{id}','ContatoController@listarIndicacoesParceiros');
 
 //Listar Telefones cadastrados do cliente indicado
 Route::get('listarTelefones/{id}','ContatoTelefoneController@show');
+//Carregar Telefone especifico para atualização
+Route::get('carregarTelefone/{id}','ContatoTelefoneController@edit');
 // Cadastrar novo telefone para contato
 Route::post('criarTelefoneContato','ContatoTelefoneController@store');
 // Editar Telefone de Contato

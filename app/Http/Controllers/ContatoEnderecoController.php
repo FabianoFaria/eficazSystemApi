@@ -166,7 +166,7 @@ class ContatoEnderecoController extends Controller
             'Bairro'=> 'required|min:2',
             'Cidade'=>'required',
             'UF'=>'required',
-            'CEP'=>'required|min:8|max:9',
+            'CEP'=>'required|min:8|max:10',
         );
 
         $validator = Validator::make($request->all(), $rules);

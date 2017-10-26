@@ -81,6 +81,25 @@ class ContatoTelefoneController extends Controller
     public function show($id)
     {
         //
+         $telefones    = DB::table('cadastros_telefones')
+                                ->select(
+                                    'cadastros_telefones.Cadastro_Telefone_ID',
+                                    'cadastros_telefones.Cadastro_ID',
+                                    'cadastros_telefones.Telefone',
+                                    'cadastros_telefones.Observacao'
+                                )
+                                ->where([
+                                    ['cadastros_telefones.Cadastro_ID','=', $id],
+                                    ['cadastros_telefones.Situacao_ID','=', '1']
+                                ])
+                                ->get();
+
+
+        if(empty($telefones)){  
+            return response()->json(null, 200);
+        }else{
+            return response()->json($telefones, 200);
+        }
     }
 
     /**

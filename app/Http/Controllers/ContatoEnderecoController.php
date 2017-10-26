@@ -139,7 +139,7 @@ class ContatoEnderecoController extends Controller
                                 'cadastros_enderecos.Referencia'
                             )
                             ->where([
-                                ['cadastros_enderecos.Cadastro_ID','=', $id],
+                                ['cadastros_enderecos.Cadastro_Endereco_ID','=', $id],
                                 ['cadastros_enderecos.Situacao_ID','=', '1']
                             ])
                             ->get();

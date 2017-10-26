@@ -96,7 +96,7 @@ class ContatoEnderecoController extends Controller
                                     'cadastros_enderecos.Bairro',
                                     'cadastros_enderecos.Cidade',
                                     'cadastros_enderecos.UF',
-                                    'cadastros_enderecos.Referencia',
+                                    'cadastros_enderecos.Referencia'
                                 )
                                 ->where([
                                     ['cadastros_enderecos.Cadastro_ID','=', $id],

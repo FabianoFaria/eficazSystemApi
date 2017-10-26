@@ -143,7 +143,8 @@ class ContatoTelefoneController extends Controller
     {
         //
         $rules = array(
-           'Telefone'=> 'required|min:8'
+           'Telefone'=> 'required|min:8',
+           'Observacao'=> 'max:100'
         );
 
         $validator = Validator::make($request->all(), $rules);

@@ -66,7 +66,7 @@ class ContatoEnderecoController extends Controller
             $this->ContatoEndereco->Cidade                  = $request->get('Cidade');
             $this->ContatoEndereco->UF                      = $request->get('UF');
             $this->ContatoEndereco->Referencia              = '';
-            $this->ContatoEndereco->Situacao_ID             = '';
+            $this->ContatoEndereco->Situacao_ID             = 1;
             $this->ContatoEndereco->Usuario_Cadastro_ID     = 0;
             $this->ContatoEndereco->Data_Cadastro           = date('Y-m-d h:i:s');
 
@@ -124,7 +124,31 @@ class ContatoEnderecoController extends Controller
     public function edit($id)
     {
         //
-       
+        $endereco   = DB::table('cadastros_enderecos')
+                            ->select(
+                                'cadastros_enderecos.Cadastro_Endereco_ID',
+                                'cadastros_enderecos.Cadastro_ID',
+                                'cadastros_enderecos.Tipo_Endereco_ID',
+                                'cadastros_enderecos.CEP',
+                                'cadastros_enderecos.Logradouro',
+                                'cadastros_enderecos.Numero',
+                                'cadastros_enderecos.Complemento',
+                                'cadastros_enderecos.Bairro',
+                                'cadastros_enderecos.Cidade',
+                                'cadastros_enderecos.UF',
+                                'cadastros_enderecos.Referencia'
+                            )
+                            ->where([
+                                ['cadastros_enderecos.Cadastro_ID','=', $id],
+                                ['cadastros_enderecos.Situacao_ID','=', '1']
+                            ])
+                            ->get();
+
+        if(empty($endereco)){  
+            return response()->json(null, 200);
+        }else{
+            return response()->json($endereco, 200);
+        }
     }
 
     /**

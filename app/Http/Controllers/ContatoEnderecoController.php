@@ -76,14 +76,42 @@ class ContatoEnderecoController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Exibe os endereços de determinado cliente indicado.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        // 
+        //
+        $indicacoes     = DB::table('cadastros_enderecos')
+                                ->select(
+                                    'cadastros_enderecos.Cadastro_Endereco_ID',
+                                    'cadastros_enderecos.Cadastro_ID',
+                                    'cadastros_enderecos.Tipo_Endereco_ID',
+                                    'cadastros_enderecos.CEP',
+                                    'cadastros_enderecos.Logradouro',
+                                    'cadastros_enderecos.Numero',
+                                    'cadastros_enderecos.Complemento',
+                                    'cadastros_enderecos.Bairro',
+                                    'cadastros_enderecos.Cidade',
+                                    'cadastros_enderecos.UF',
+                                    'cadastros_enderecos.Referencia',
+                                )
+                                ->where([
+                                    ['cadastros_enderecos.Cadastro_ID','=', $id],
+                                    ['cadastros_enderecos.Situacao_ID','=', '1']
+                                ])
+                                ->get();
+
+        if(empty($indicacoes)){  
+            return response()->json(null, 200);
+        }else{
+            return response()->json($indicacoes, 200);
+        }
+
+
+
     }
 
     /**

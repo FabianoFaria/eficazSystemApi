@@ -44,6 +44,9 @@ Route::put('editarTelefoneContato/{id}','ContatoTelefoneController@update');
 // Remover Telefone de Contato
 Route::delete('removerTelefoneContato/{id}','ContatoTelefoneController@destroy');
 
+
+//Listar Enderecos cadastrados do cliente indicado
+Route::get('listarEnderecos/{id}','ContatoEnderecoController@show');
 // Cadastrar novo endereco para contato
 Route::post('criarEnderecoContato','ContatoEnderecoController@store');
 // Editar endereco de contato

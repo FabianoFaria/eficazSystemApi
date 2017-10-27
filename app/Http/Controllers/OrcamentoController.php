@@ -386,10 +386,10 @@ class OrcamentoController extends Controller
         */
         $totalOrcamento = DB::table('orcamentos_workflows AS ow')
                             ->leftJoin('cadastros_dados AS cd', 'cd.Cadastro_ID', '=','ow.Solicitante_ID')
-                            ->where(
+                            ->where([
                                 ['cd.Parceiro_Origem_ID','=', $id_parceiro],
                                 ['ow.Situacao_ID','!=','113']
-                            )
+                            ])
                             ->count('ow.Titulo')
                             ->get();
 

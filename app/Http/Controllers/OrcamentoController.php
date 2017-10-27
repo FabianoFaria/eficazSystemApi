@@ -389,7 +389,7 @@ class OrcamentoController extends Controller
                             ->count('ow.Titulo')
                             ->where(
                                 ['cd.Parceiro_Origem_ID','=', $id_parceiro],
-                                ['ow.Situacao_ID','!=','113'],
+                                ['ow.Situacao_ID','!=','113']
                             )
                             ->get();
 

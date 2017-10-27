@@ -310,6 +310,7 @@ class OrcamentoController extends Controller
                                         'orcamentos_workflows.Workflow_ID',
                                         'orcamentos_workflows.Titulo',
                                         'orcamentos_workflows.Data_Finalizado',
+                                        'orcamentos_workflows.Data_Abertura',
                                         'orcamentos_propostas.Proposta_ID',
                                         'orcamentos_propostas.Forma_Pagamento_ID',
                                         'orcamentos_propostas_vencimentos.Data_Vencimento',

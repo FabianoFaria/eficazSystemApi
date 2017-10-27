@@ -252,33 +252,42 @@ class OrcamentoController extends Controller
      */
     public function statusOrcamentosParceiro($id)
     {
-        // $statusOrcamentos   = DB::table('orcamentos_propostas_vencimentos')
-        //                          ->where([
-        //                                 ['cadastros_dados.Parceiro_Origem_ID','=', $id],
-        //                                 ['orcamentos_workflows.Situacao_ID','=','113'],
-        //                                 ['orcamentos_propostas.Situacao_ID','=','1'],
-        //                                 ['orcamentos_propostas_produtos.Situacao_ID','=','1']
-        //                             ]);
+        /*
+            SELECT
+                ow.Workflow_ID,
+                ow.Titulo
+            FROM orcamentos_workflows ow
+            LEFT JOIN cadastros_dados cd ON ow.Solicitante_ID = cd.Cadastro_ID
+            WHERE cd.Parceiro_Origem_ID = '1'
+
+        */
 
         $statusOrcamento    = DB::table('orcamentos_workflows')
-                                ->join('tipo', 'orcamentos_workflows.Situacao_ID', '=', 'tipo.Tipo_ID')
-                                ->join('cadastros_dados','cadastros_dados.Cadastro_ID','=','orcamentos_workflows.Solicitante_ID')
-                                ->select('orcamentos_workflows.Workflow_ID',
-                                    'orcamentos_workflows.Empresa_ID', 
-                                    'orcamentos_workflows.Solicitante_ID', 
-                                    'orcamentos_workflows.Representante_ID',
-                                    'orcamentos_workflows.Situacao_ID',
-                                    'orcamentos_workflows.Codigo',
-                                    'orcamentos_workflows.Titulo',
-                                    'orcamentos_workflows.Data_Abertura',
-                                    'orcamentos_workflows.Data_Finalizado',
-                                    'orcamentos_workflows.Data_Cadastro',
-                                    'orcamentos_workflows.Usuario_Cadastro_ID',
-                                    'tipo.Descr_Tipo as Situacao',
-                                    'cadastros_dados.Nome'
-                                )
-                                ->where('cadastros_dados.Parceiro_Origem_ID', '=', $id)
-                                ->first();
+                                    ->join('cadastros_dados', 'cadastros_dados.Cadastro_ID', '=', 'orcamentos_workflows.Solicitante_ID')
+                                    ->select('orcamentos_workflows.Workflow_ID',
+                                        'orcamentos_workflows.Titulo'
+                                    )
+                                    ->where('cadastros_dados.Parceiro_Origem_ID', '=', $id)
+                                    ->get();
+        // $statusOrcamento    = DB::table('orcamentos_workflows')
+        //                         ->join('tipo', 'orcamentos_workflows.Situacao_ID', '=', 'tipo.Tipo_ID')
+        //                         ->join('cadastros_dados','cadastros_dados.Cadastro_ID','=','orcamentos_workflows.Solicitante_ID')
+        //                         ->select('orcamentos_workflows.Workflow_ID',
+        //                             'orcamentos_workflows.Empresa_ID', 
+        //                             'orcamentos_workflows.Solicitante_ID', 
+        //                             'orcamentos_workflows.Representante_ID',
+        //                             'orcamentos_workflows.Situacao_ID',
+        //                             'orcamentos_workflows.Codigo',
+        //                             'orcamentos_workflows.Titulo',
+        //                             'orcamentos_workflows.Data_Abertura',
+        //                             'orcamentos_workflows.Data_Finalizado',
+        //                             'orcamentos_workflows.Data_Cadastro',
+        //                             'orcamentos_workflows.Usuario_Cadastro_ID',
+        //                             'tipo.Descr_Tipo as Situacao',
+        //                             'cadastros_dados.Nome'
+        //                         )
+        //                         ->where('cadastros_dados.Parceiro_Origem_ID', '=', $id)
+        //                         ->first();
 
         if(empty($statusOrcamentos)){  
             return response()->json(null, 200);

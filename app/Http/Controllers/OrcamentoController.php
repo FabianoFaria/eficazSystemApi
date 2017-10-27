@@ -270,6 +270,64 @@ class OrcamentoController extends Controller
         }
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function listarOrcamentosCliente($id)
+    {
+
+        //
+        $listaOrcamento     = DB::table('orcamentos_propostas_vencimentos')
+                                ->leftJoin('orcamentos_propostas', 'orcamentos_propostas_vencimentos.Proposta_ID', '=','orcamentos_propostas.Proposta_ID')
+                                ->leftJoin('orcamentos_workflows', 'orcamentos_propostas.Workflow_ID','=','orcamentos_workflows.Workflow_ID')
+                                ->leftJoin('orcamentos_propostas_produtos','orcamentos_propostas_produtos.Proposta_ID','=','orcamentos_propostas.Proposta_ID')
+                                ->leftJoin('tipo','tipo.Tipo_ID','=','orcamentos_workflows.Situacao_ID')
+                                ->leftJoin('tipo as tpPgm','tpPgm.Tipo_ID','=','orcamentos_propostas.Forma_Pagamento_ID')
+                                ->select(
+                                    'orcamentos_workflows.Workflow_ID',
+                                    'orcamentos_workflows.Titulo',
+                                    'orcamentos_workflows.Data_Finalizado',
+                                    'orcamentos_propostas.Proposta_ID',
+                                    'orcamentos_propostas.Forma_Pagamento_ID',
+                                    'orcamentos_propostas_vencimentos.Data_Vencimento',
+                                    'orcamentos_propostas_vencimentos.Dias_Vencimento',
+                                    'orcamentos_propostas_vencimentos.Valor_Vencimento',
+                                    'orcamentos_propostas_vencimentos.Valor_Vencimento as totalServico',
+                                    'tipo.Descr_Tipo as Status',
+                                    'tpPgm.Descr_Tipo as tipoPagamento'
+                                )
+                                ->where([
+                                        ['orcamentos_workflows.Solicitante_ID','=', $id],
+                                        ['orcamentos_workflows.Situacao_ID','=','113'],
+                                        ['orcamentos_propostas.Situacao_ID','=','1'],
+                                        ['orcamentos_propostas_produtos.Situacao_ID','=','1']
+                                    ])
+                                ->groupBy(
+                                        'orcamentos_workflows.Workflow_ID',
+                                        'orcamentos_workflows.Titulo',
+                                        'orcamentos_workflows.Data_Finalizado',
+                                        'orcamentos_propostas.Proposta_ID',
+                                        'orcamentos_propostas.Forma_Pagamento_ID',
+                                        'orcamentos_propostas_vencimentos.Data_Vencimento',
+                                        'orcamentos_propostas_vencimentos.Dias_Vencimento',
+                                        'orcamentos_propostas_vencimentos.Valor_Vencimento',
+                                        'tipo.Descr_Tipo',
+                                        'tpPgm.Descr_Tipo'
+                                        ) 
+                                ->get();
+
+        if(empty($listaOrcamento)){  
+            return response()->json(null, 200);
+        }else{
+            return response()->json($listaOrcamento, 200);
+        }
+
+
+    }
+
 
     /**
      * Show the form for editing the specified resource.

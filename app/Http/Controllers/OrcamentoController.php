@@ -262,7 +262,7 @@ class OrcamentoController extends Controller
 
         */
 
-        $statusOrcamento    = DB::table('orcamentos_workflows')
+        $statusOrcamentos   = DB::table('orcamentos_workflows')
                                     ->leftjoin('cadastros_dados', 'cadastros_dados.Cadastro_ID', '=', 'orcamentos_workflows.Solicitante_ID')
                                     ->select('orcamentos_workflows.Workflow_ID',
                                         'orcamentos_workflows.Titulo'

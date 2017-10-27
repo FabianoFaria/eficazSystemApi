@@ -364,4 +364,39 @@ class OrcamentoController extends Controller
     {
         //
     }
+
+    /**
+     * Retorna o total de orçamentos em aberto por um determinado cliente
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function totalOrcamentosParceiro($id_parceiro)
+    {
+        // 
+
+
+        /*
+            SELECT
+            COUNT(ow.Titulo)
+            FROM orcamentos_workflows ow
+            LEFT JOIN cadastros_dados cd on cd.Cadastro_ID = ow.Solicitante_ID
+            WHERE cd.Parceiro_Origem_ID =1 AND ow.Situacao_ID != '113'
+    
+        */
+        $totalOrcamento = DB::table('orcamentos_workflows AS ow')
+                            ->leftJoin('cadastros_dados AS cd', 'cd.Cadastro_ID', '=','ow.Solicitante_ID')
+                            ->count('ow.Titulo');
+                            ->where(
+                                ['cd.Parceiro_Origem_ID','=', $id_parceiro],
+                                ['ow.Situacao_ID','!=','113'],
+                            )
+                            ->get();
+
+        if(empty($listaOrcamento)){  
+            return response()->json(null, 200);
+        }else{
+            return response()->json($listaOrcamento, 200);
+        }
+    }
 }

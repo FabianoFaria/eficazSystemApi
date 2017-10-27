@@ -75,6 +75,9 @@ Route::post('criarParceiro','ParceirosController@store');
 Route::put('editarParceiro/{id}','ParceirosController@update');
 
 
+
+// Lista o total de orçamentos de um dos parceiros
+Route::get('totalOrcamentosParceiro/{id}','OrcamentoController@totalOrcamentosParceiro');
 // Listar os orçamentos e ou chamados de determinado cliente
 Route::get('listarOrcamentoCliente/{id}','OrcamentoController@listarOrcamentosCliente');
 // Listar os orçamentos e ou chamados relacioandos ao parceiro

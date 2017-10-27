@@ -143,6 +143,7 @@ class ContatoController extends Controller
                                     'cadastros_dados.Nome',
                                     'cadastros_dados.Nome_Fantasia',
                                     'cadastros_dados.Data_Nascimento',
+                                    'cadastros_dados.Cpf_Cnpj',
                                     'cadastros_dados.RG',
                                     'cadastros_dados.Email',
                                     'cadastros_dados.Foto',

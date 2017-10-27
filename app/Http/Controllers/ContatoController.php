@@ -303,4 +303,22 @@ class ContatoController extends Controller
     {
         //
     }
+
+    public function totalIndicacoesParceiros($id)
+    {
+        //
+        $indicacoes     = DB::table('cadastros_dados AS cd')
+                                ->select(DB::raw('count(cd.Nome) as totalIndicados'))
+                                ->where([
+                                        ['cd.Parceiro_Origem_ID','=', $id]
+                                    ])
+                                ->get();
+
+
+        if(empty($indicacoes)){
+            return response()->json(null, 200);
+        }else{
+            return response()->json($indicacoes, 200);
+        }
+    }
 }

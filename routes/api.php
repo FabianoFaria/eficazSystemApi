@@ -36,6 +36,8 @@ Route::post('criarContato','ContatoController@store');
 Route::put('editarContato/{id}','ContatoController@update');
 // Listar Contatos
 Route::get('listarContatos/{id}','ContatoController@listarIndicacoesParceiros');
+//Listar total de contatos indicados pelo parceiro
+Route::get('totalContatos/{id}','ContatoController@totalIndicacoesParceiros');
 
 //Listar Telefones cadastrados do cliente indicado
 Route::get('listarTelefones/{id}','ContatoTelefoneController@show');

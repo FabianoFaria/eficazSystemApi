@@ -402,7 +402,6 @@ class OrcamentoController extends Controller
     {
         // 
 
-
         /*
             SELECT
             COUNT(ow.Titulo)
@@ -424,8 +423,6 @@ class OrcamentoController extends Controller
         if(empty($totalOrcamento)){  
             return response()->json(null, 200);
         }else{
-
-            //$total = $totalOrcamento[0]['totalOrcamentos'];
 
             return response()->json( $totalOrcamento, 200);
         }

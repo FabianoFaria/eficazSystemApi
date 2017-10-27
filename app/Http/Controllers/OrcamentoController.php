@@ -268,7 +268,7 @@ class OrcamentoController extends Controller
                                         'orcamentos_workflows.Titulo'
                                     )
                                     ->where('cadastros_dados.Parceiro_Origem_ID', '=', $id)
-                                    ->get();
+                                    ->get()->toSql();
         // $statusOrcamento    = DB::table('orcamentos_workflows')
         //                         ->join('tipo', 'orcamentos_workflows.Situacao_ID', '=', 'tipo.Tipo_ID')
         //                         ->join('cadastros_dados','cadastros_dados.Cadastro_ID','=','orcamentos_workflows.Solicitante_ID')

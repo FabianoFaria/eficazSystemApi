@@ -302,7 +302,7 @@ class OrcamentoController extends Controller
                                 ->where([
                                         ['orcamentos_workflows.Solicitante_ID','=', $id],
                                         ['orcamentos_propostas.Situacao_ID','=','1'],
-                                        ['orcamentos_propostas_produtos.Situacao_ID','=','1']
+                                        ['orcamentos_propostas_produtos.Situacao_ID','=','1'],
                                         ['orcamentos_propostas_vencimentos.Situacao_ID','=','1']
                                     ])
                                 ->groupBy(

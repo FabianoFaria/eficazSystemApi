@@ -199,7 +199,6 @@ class OrcamentoController extends Controller
                                 )
                                 ->where([
                                         ['orcamentos_workflows.Workflow_ID','=', $id],
-                                        ['orcamentos_workflows.Situacao_ID','=','113'],
                                         ['orcamentos_propostas.Situacao_ID','=','1'],
                                         ['orcamentos_propostas_produtos.Situacao_ID','=','1']
                                     ])

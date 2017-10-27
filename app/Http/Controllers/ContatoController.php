@@ -130,10 +130,31 @@ class ContatoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         //
-        $indicacao      = Contato::find($id);
+        //$indicacao      = Contato::find($id);
+
+        $id_parceiro    =  $request->get('parceiro_sistema');
+
+        $indicacao      = DB::table('cadastros_dados')
+                                ->select(
+                                    'cadastros_dados.Cadastro_ID',
+                                    'cadastros_dados.Nome',
+                                    'cadastros_dados.Nome_Fantasia',
+                                    'cadastros_dados.Data_Nascimento',
+                                    'cadastros_dados.RG',
+                                    'cadastros_dados.Email',
+                                    'cadastros_dados.Foto',
+                                    'cadastros_dados.Parceiro_Origem_ID'
+                                )
+                                ->where(
+                                    [
+                                        ['cadastros_dados.Cadastro_ID','=', $id],
+                                        ['cadastros_dados.Parceiro_Origem_ID','=', $id_parceiro]
+                                    ]
+                                )
+                                ->get();
 
         if(empty($indicacao)){  
             return response()->json(null, 200);

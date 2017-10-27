@@ -391,7 +391,7 @@ class OrcamentoController extends Controller
                                 ['cd.Parceiro_Origem_ID','=', $id_parceiro],
                                 ['ow.Situacao_ID','!=','113']
                             ])
-                            ->get();
+                            ->first();
 
         if(empty($totalOrcamento)){  
             return response()->json(null, 200);

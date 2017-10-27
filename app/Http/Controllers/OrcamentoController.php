@@ -396,7 +396,7 @@ class OrcamentoController extends Controller
         if(empty($totalOrcamento)){  
             return response()->json(null, 200);
         }else{
-            return response()->json($totalOrcamento[0], 200);
+            return response()->json($totalOrcamento[0]['totalOrcamentos'], 200);
         }
     }
 }

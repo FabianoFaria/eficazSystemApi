@@ -393,12 +393,10 @@ class OrcamentoController extends Controller
                             ])
                             ->get();
 
-        dd($totalOrcamento);
-
         if(empty($totalOrcamento)){  
             return response()->json(null, 200);
         }else{
-            return response()->json($totalOrcamento, 200);
+            return response()->json($totalOrcamento[0], 200);
         }
     }
 }

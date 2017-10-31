@@ -238,7 +238,7 @@ class OrcamentoController extends Controller
         //                         ->first();
 
         $statusOrcamento    = DB::table('orcamentos_propostas AS op')
-                                ->innerJoin('orcamentos_workflows AS ow', 'ow.Workflow_ID', '=','op.Workflow_ID')
+                                ->join('orcamentos_workflows AS ow', 'ow.Workflow_ID', '=','op.Workflow_ID')
                                 ->leftJoin('orcamentos_propostas_produtos AS opp', 'opp.Proposta_ID', '=','op.Proposta_ID')
                                 ->leftJoin('orcamentos_propostas_vencimentos AS opv', 'opv.Proposta_ID', '=','op.Proposta_ID')
                                 ->select(

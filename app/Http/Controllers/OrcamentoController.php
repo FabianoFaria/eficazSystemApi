@@ -258,7 +258,10 @@ class OrcamentoController extends Controller
                                 ])
                                 ->groupBy(
                                     'ow.Workflow_ID',
-                                    'ow.Titulo'
+                                    'op.Titulo',
+                                    'op.Proposta_ID',
+                                    'opv.Data_Vencimento',
+                                    'opv.Dias_Vencimento'
                                 )
                                 ->get();
 

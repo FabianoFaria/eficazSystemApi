@@ -256,6 +256,7 @@ class OrcamentoController extends Controller
                                     ['opv.Situacao_ID','=','1'],
                                     ['opp.Situacao_ID','=','1']
                                 ])
+                                ->get();
 
         /*
             SELECT

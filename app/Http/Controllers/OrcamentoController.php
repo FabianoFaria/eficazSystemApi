@@ -241,6 +241,8 @@ class OrcamentoController extends Controller
                                 ->join('orcamentos_workflows AS ow', 'ow.Workflow_ID', '=','op.Workflow_ID')
                                 ->leftJoin('orcamentos_propostas_produtos AS opp', 'opp.Proposta_ID', '=','op.Proposta_ID')
                                 ->leftJoin('orcamentos_propostas_vencimentos AS opv', 'opv.Proposta_ID', '=','op.Proposta_ID')
+                                ->leftJoin('tipo','tipo.Tipo_ID','=','orcamentos_workflows.Situacao_ID')
+                                ->leftJoin('tipo as tpPgm','tpPgm.Tipo_ID','=','op.Forma_Pagamento_ID')
                                 ->select(
                                     'ow.Titulo AS Orc_titulo',
                                     'ow.Data_Finalizado',
@@ -251,7 +253,9 @@ class OrcamentoController extends Controller
                                     DB::raw('count(opp.Proposta_Produto_ID) as Total_Itens_Proposta'),
                                     'opv.Data_Vencimento',
                                     'opv.Dias_Vencimento',
-                                    'opv.Valor_Vencimento'
+                                    'opv.Valor_Vencimento',
+                                    'tipo.Descr_Tipo as Status',
+                                    'tpPgm.Descr_Tipo as tipoPagamento'
                                 )
                                 ->where([
                                     ['ow.Workflow_ID','=',$id],
@@ -267,7 +271,9 @@ class OrcamentoController extends Controller
                                     'op.Proposta_ID',
                                     'opv.Data_Vencimento',
                                     'opv.Valor_Vencimento',
-                                    'opv.Dias_Vencimento'
+                                    'opv.Dias_Vencimento',
+                                    'tipo.Descr_Tipo',
+                                    'tpPgm.Descr_Tipo'
                                 )
                                 ->get();
 

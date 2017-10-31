@@ -256,7 +256,10 @@ class OrcamentoController extends Controller
                                     ['opv.Situacao_ID','=','1'],
                                     ['opp.Situacao_ID','=','1']
                                 ])
-                                ->first();
+                                ->groupBy(
+                                    'ow.Workflow_ID'
+                                )
+                                ->get();
 
         /*
             SELECT

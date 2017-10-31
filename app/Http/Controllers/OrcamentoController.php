@@ -243,27 +243,28 @@ class OrcamentoController extends Controller
                                 ->leftJoin('orcamentos_propostas_vencimentos AS opv', 'opv.Proposta_ID', '=','op.Proposta_ID')
                                 ->select(
                                     'ow.Titulo AS Orc_titulo',
+                                    'ow.Data_Finalizado',
                                     'op.Titulo',
                                     'op.Proposta_ID',
                                     DB::raw('SUM(opp.Quantidade) as Quantidade_Total_Proposta'),
                                     DB::raw('SUM(opp.Quantidade * opp.Valor_Venda_Unitario) as Valor_Total_Proposta'),
                                     DB::raw('count(opp.Proposta_Produto_ID) as Total_Itens_Proposta'),
                                     'opv.Data_Vencimento',
-                                    'opv.Dias_Vencimento',
                                     'opv.Dias_Vencimento'
                                 )
                                 ->where([
                                     ['ow.Workflow_ID','=',$id],
+                                    ['op.Situacao_ID','=','1'],
                                     ['opv.Situacao_ID','=','1'],
                                     ['opp.Situacao_ID','=','1']
                                 ])
                                 ->groupBy(
                                     'ow.Workflow_ID',
+                                    'ow.Data_Finalizado',
                                     'ow.Titulo',
                                     'op.Titulo',
                                     'op.Proposta_ID',
                                     'opv.Data_Vencimento',
-                                    'opv.Dias_Vencimento',
                                     'opv.Dias_Vencimento'
                                 )
                                 ->get();

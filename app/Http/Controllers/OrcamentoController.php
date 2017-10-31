@@ -258,7 +258,7 @@ class OrcamentoController extends Controller
                                 ])
                                 ->groupBy(
                                     'ow.Workflow_ID',
-                                    'ow.Titulo',
+                                    'ow.Titulo'
                                 )
                                 ->get();
 

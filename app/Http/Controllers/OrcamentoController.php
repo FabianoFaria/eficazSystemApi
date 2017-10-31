@@ -250,7 +250,8 @@ class OrcamentoController extends Controller
                                     DB::raw('SUM(opp.Quantidade * opp.Valor_Venda_Unitario) as Valor_Total_Proposta'),
                                     DB::raw('count(opp.Proposta_Produto_ID) as Total_Itens_Proposta'),
                                     'opv.Data_Vencimento',
-                                    'opv.Dias_Vencimento'
+                                    'opv.Dias_Vencimento',
+                                    'opv.Valor_Vencimento',
                                 )
                                 ->where([
                                     ['ow.Workflow_ID','=',$id],
@@ -265,6 +266,7 @@ class OrcamentoController extends Controller
                                     'op.Titulo',
                                     'op.Proposta_ID',
                                     'opv.Data_Vencimento',
+                                    'opv.Valor_Vencimento',
                                     'opv.Dias_Vencimento'
                                 )
                                 ->get();

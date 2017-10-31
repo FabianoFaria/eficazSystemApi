@@ -178,44 +178,6 @@ class OrcamentoController extends Controller
         //                         ->groupBy('orcamentos_propostas.Proposta_ID') 
         //                         ->first();
 
-        $statusOrcamento    = DB::table('orcamentos_propostas_vencimentos')
-                                ->leftJoin('orcamentos_propostas', 'orcamentos_propostas_vencimentos.Proposta_ID', '=','orcamentos_propostas.Proposta_ID')
-                                ->leftJoin('orcamentos_workflows', 'orcamentos_propostas.Workflow_ID','=','orcamentos_workflows.Workflow_ID')
-                                ->leftJoin('orcamentos_propostas_produtos','orcamentos_propostas_produtos.Proposta_ID','=','orcamentos_propostas.Proposta_ID')
-                                ->leftJoin('tipo','tipo.Tipo_ID','=','orcamentos_workflows.Situacao_ID')
-                                ->leftJoin('tipo as tpPgm','tpPgm.Tipo_ID','=','orcamentos_propostas.Forma_Pagamento_ID')
-                                ->select(
-                                    'orcamentos_workflows.Workflow_ID',
-                                    'orcamentos_workflows.Titulo',
-                                    'orcamentos_workflows.Data_Finalizado',
-                                    'orcamentos_propostas.Proposta_ID',
-                                    'orcamentos_propostas.Forma_Pagamento_ID',
-                                    'orcamentos_propostas_vencimentos.Data_Vencimento',
-                                    'orcamentos_propostas_vencimentos.Dias_Vencimento',
-                                    'orcamentos_propostas_vencimentos.Valor_Vencimento',
-                                    'orcamentos_propostas_vencimentos.Valor_Vencimento as totalServico',
-                                    'tipo.Descr_Tipo as Status',
-                                    'tpPgm.Descr_Tipo as tipoPagamento'
-                                )
-                                ->where([
-                                        ['orcamentos_workflows.Workflow_ID','=', $id],
-                                        ['orcamentos_workflows.Situacao_ID','=','113'],
-                                        ['orcamentos_propostas.Situacao_ID','=','1'],
-                                        ['orcamentos_propostas_produtos.Situacao_ID','=','1']
-                                    ])
-                                ->groupBy(
-                                        'orcamentos_workflows.Workflow_ID',
-                                        'orcamentos_workflows.Titulo',
-                                        'orcamentos_workflows.Data_Finalizado',
-                                        'orcamentos_propostas.Proposta_ID',
-                                        'orcamentos_propostas.Forma_Pagamento_ID',
-                                        'orcamentos_propostas_vencimentos.Data_Vencimento',
-                                        'orcamentos_propostas_vencimentos.Dias_Vencimento',
-                                        'orcamentos_propostas_vencimentos.Valor_Vencimento',
-                                        'tipo.Descr_Tipo',
-                                        'tpPgm.Descr_Tipo'
-                                        ) 
-                                ->first();
         /*
             
             select 
@@ -233,6 +195,83 @@ class OrcamentoController extends Controller
             group by ow.Titulo, op.Proposta_ID, opv.Data_Vencimento, opv.Dias_Vencimento, opv.Valor_Vencimento
 
                 
+        */
+
+        // $statusOrcamento    = DB::table('orcamentos_propostas_vencimentos')
+        //                         ->leftJoin('orcamentos_propostas', 'orcamentos_propostas_vencimentos.Proposta_ID', '=','orcamentos_propostas.Proposta_ID')
+        //                         ->leftJoin('orcamentos_workflows', 'orcamentos_propostas.Workflow_ID','=','orcamentos_workflows.Workflow_ID')
+        //                         ->leftJoin('orcamentos_propostas_produtos','orcamentos_propostas_produtos.Proposta_ID','=','orcamentos_propostas.Proposta_ID')
+        //                         ->leftJoin('tipo','tipo.Tipo_ID','=','orcamentos_workflows.Situacao_ID')
+        //                         ->leftJoin('tipo as tpPgm','tpPgm.Tipo_ID','=','orcamentos_propostas.Forma_Pagamento_ID')
+        //                         ->select(
+        //                             'orcamentos_workflows.Workflow_ID',
+        //                             'orcamentos_workflows.Titulo',
+        //                             'orcamentos_workflows.Data_Finalizado',
+        //                             'orcamentos_propostas.Proposta_ID',
+        //                             'orcamentos_propostas.Forma_Pagamento_ID',
+        //                             'orcamentos_propostas_vencimentos.Data_Vencimento',
+        //                             'orcamentos_propostas_vencimentos.Dias_Vencimento',
+        //                             'orcamentos_propostas_vencimentos.Valor_Vencimento',
+        //                             'orcamentos_propostas_vencimentos.Valor_Vencimento as totalServico',
+        //                             'tipo.Descr_Tipo as Status',
+        //                             'tpPgm.Descr_Tipo as tipoPagamento'
+        //                         )
+        //                         ->where([
+        //                                 ['orcamentos_workflows.Workflow_ID','=', $id],
+        //                                 ['orcamentos_workflows.Situacao_ID','=','113'],
+        //                                 ['orcamentos_propostas.Situacao_ID','=','1'],
+        //                                 ['orcamentos_propostas_produtos.Situacao_ID','=','1'],
+        //                                 ['orcamentos_propostas_vencimentos.Situacao_ID','=','1']
+        //                             ])
+        //                         ->groupBy(
+        //                                 'orcamentos_workflows.Workflow_ID',
+        //                                 'orcamentos_workflows.Titulo',
+        //                                 'orcamentos_workflows.Data_Finalizado',
+        //                                 'orcamentos_propostas.Proposta_ID',
+        //                                 'orcamentos_propostas.Forma_Pagamento_ID',
+        //                                 'orcamentos_propostas_vencimentos.Data_Vencimento',
+        //                                 'orcamentos_propostas_vencimentos.Dias_Vencimento',
+        //                                 'orcamentos_propostas_vencimentos.Valor_Vencimento',
+        //                                 'tipo.Descr_Tipo',
+        //                                 'tpPgm.Descr_Tipo'
+        //                                 ) 
+        //                         ->first();
+
+        $statusOrcamento    = DB::table('orcamentos_propostas AS op')
+                                ->innerJoin('orcamentos_workflows AS ow', 'ow.Workflow_ID', '=','op.Workflow_ID')
+                                ->leftJoin('orcamentos_propostas_produtos AS opp', 'opp.Proposta_ID', '=','op.Proposta_ID')
+                                ->leftJoin('orcamentos_propostas_vencimentos AS opv', 'opv.Proposta_ID', '=','op.Proposta_ID')
+                                ->select(
+                                    'ow.Titulo AS Orc_titulo',
+                                    'op.Titulo',
+                                    'op.Proposta_ID',
+                                    DB::raw('SUM(opp.Quantidade) as Quantidade_Total_Proposta'),
+                                    DB::raw('SUM(opp.Quantidade * opp.Valor_Venda_Unitario) as Valor_Total_Proposta'),
+                                    DB::raw('count(opp.Proposta_Produto_ID) as Total_Itens_Proposta'),
+                                    'opv.Data_Vencimento',
+                                    'opv.Dias_Vencimento'
+                                )
+                                ->where([
+                                    ['ow.Workflow_ID','=',$id],
+                                    ['opv.Situacao_ID','=','1'],
+                                    ['opp.Situacao_ID','=','1']
+                                ])
+
+        /*
+            SELECT
+                ow.Titulo as 'Orc_titulo',
+                op.Titulo,
+                op.Proposta_ID,
+                SUM(opp.Quantidade) as Quantidade_Total_Proposta,
+                SUM(opp.Quantidade * opp.Valor_Venda_Unitario) as Valor_Total_Proposta,
+                count(opp.Proposta_Produto_ID) as Total_Itens_Proposta,
+                opv.Data_Vencimento,
+                opv.Dias_Vencimento
+            FROM   orcamentos_propostas op
+            inner join orcamentos_workflows ow              on ow.Workflow_ID = op.Workflow_ID
+            left join orcamentos_propostas_produtos opp     on opp.Proposta_ID = op.Proposta_ID and opp.Situacao_ID = 1
+            left join orcamentos_propostas_vencimentos opv on opv.Proposta_ID = op.Proposta_ID
+            where ow.Workflow_ID = '303' and opv.Situacao_ID = '1'
         */
 
 

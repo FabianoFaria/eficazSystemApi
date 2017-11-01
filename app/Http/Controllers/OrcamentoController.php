@@ -490,4 +490,5 @@ class OrcamentoController extends Controller
             return response()->json( $totalOrcamento, 200);
         }
     }
+
 }

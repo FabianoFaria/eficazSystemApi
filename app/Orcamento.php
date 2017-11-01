@@ -21,7 +21,7 @@ class Orcamento extends Model
 	protected $fillable 	= ['Titulo'];
 
 	public static $rules 	= array(
-    	'Titulo'				=>'required|min:4',
+    	'Titulo'			=>'required|min:4',
     );
 
 	public function isValid($data){

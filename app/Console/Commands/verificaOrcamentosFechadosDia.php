@@ -10,6 +10,8 @@ use App\Orcamentos_propostas_produtos;
 use App\Orcamentos_propostas_vencimentos;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
 
 class verificaOrcamentosFechadosDia extends Command
 {
@@ -61,10 +63,14 @@ class verificaOrcamentosFechadosDia extends Command
                                 ->leftJoin('orcamentos_propostas_vencimentos AS opv', 'opv.Proposta_ID', '=','op.Proposta_ID')
                                 ->leftJoin('tipo','tipo.Tipo_ID','=','ow.Situacao_ID')
                                 ->leftJoin('tipo AS tpPgm','tpPgm.Tipo_ID','=','op.Forma_Pagamento_ID')
+                                ->leftJoin('cadastros_dados AS cd', 'cd.Cadastro_ID', '=', 'ow.Solicitante_ID')
                                 ->select(
                                     'ow.Titulo AS Orc_titulo',
                                     'ow.Workflow_ID',
                                     'ow.Data_Finalizado',
+                                    'cd.Nome',
+                                    'cd.Nome_Fantasia',
+                                    'cd.Parceiro_Origem_ID',
                                     'op.Titulo',
                                     'op.Proposta_ID',
                                     DB::raw('SUM(opp.Quantidade) AS Quantidade_Total_Proposta'),
@@ -78,7 +84,7 @@ class verificaOrcamentosFechadosDia extends Command
                                 )
                                 ->where([
                                     ['ow.Data_Finalizado','>', '2017-10-01 00:00:00'],
-                                    ['ow.Data_Finalizado','<', '2017-10-30 23:59:59'],
+                                    ['ow.Data_Finalizado','<', '2017-10-31 23:59:59'],
                                     ['ow.Situacao_ID','=','113'],
                                     ['op.Situacao_ID','=','1'],
                                     ['opp.Situacao_ID','=','1'],
@@ -100,15 +106,135 @@ class verificaOrcamentosFechadosDia extends Command
 
         if(!empty($totalOrcamento)){
 
-            $i = 0; 
 
             foreach ($totalOrcamento as $orcamento) {
                 
-                $this->line('Orcamento ID '.$orcamento->Workflow_ID.' Total orcamento : '.$orcamento->Valor_Total_Proposta.' Data finalizado: '.$orcamento->Data_Finalizado.'');
+                $this->line('Orcamento ID '.$orcamento->Nome.' Total orcamento : '.$orcamento->Valor_Total_Proposta.' Data finalizado: '.$orcamento->Data_Finalizado.'');
 
-                $i++;
                 //$this->line('Total de orçamentos : '.$orcamento->Orc_titulo.'');
 
+
+                //Verifica se o orcamento do cliente tem relação com algum parceiro, e então irá carregar os dados do mesmo
+                if($orcamento->Parceiro_Origem_ID != 0){
+
+                    $this->line('-- Procurando dados do parceiro...');
+
+                    $valorCommicao  = Orcamento::comissaoOrcamentoAulso($orcamento->Valor_Total_Proposta);
+
+                    $parceiro = null;
+                    
+                    //$client = new Client(); //GuzzleHttp\Client
+                    $client = new Client();  
+
+                    try{
+
+                        $r = $client->get('https://parcerias.eficazsystem.com.br/dadosParceiro/'.$orcamento->Parceiro_Origem_ID);
+
+                        $statusRequisicao   = $r->getStatusCode();
+                        $resultado          = $r->json();
+
+                    }catch(RequestException $e){
+
+                        // To catch exactly error 400 use 
+                        if ($e->getResponse()->getStatusCode() == '400') {
+                            //echo "Got response 400";
+                            Session::flash('error_cad', 'Não foi possivel encontrar os dados do parceiro, faveor tentar novamente em alguns instantes.');
+
+                            $parceiro = null;
+                        }
+
+                    }
+
+                    switch ($statusRequisicao) {
+
+                        case '201':
+
+                            $parceiro = $resultado;
+
+                        break;
+
+                        case '400':
+            
+                            $parceiro = null;
+
+                        break;
+
+                        default:
+
+                            $parceiro = null;
+
+                        break;
+
+                    }
+
+                    foreach ( $parceiro['parceiro'] as $parceiroConta )
+                    {  
+
+                        //$this->line('Parceiro para receber commisao: '.$parceiroConta['nome_vendedor'].' email do parceiro : '.$parceiroConta['email_usuario'].' Valor da comissao: '.$valorCommicao);
+
+                        $dadosParceiro  = array(
+                                'idParceiroSistema'         => $parceiroConta['id_parceiro_sistema'],
+                                'nomeParceiro'              => $parceiroConta['nome_vendedor'],
+                                'emailParceiro'             => $parceiroConta['email_usuario'],
+                                'nome_conta'                => $parceiroConta['nome_conta'],
+                                'agencia'                   => $parceiroConta['agencia'],
+                                'numero_conta'              => $parceiroConta['numero_conta'],
+                                'nome_instituicao_bancaria' => $parceiroConta['nome_instituicao_bancaria'],
+                                'valorCommicao'             => $valorCommicao
+                            );
+
+                    }
+
+                }else{
+
+                    $dadosParceiro = null;
+                }
+
+                //Verificando data para faturamento do orçamento
+                $diasParaFaturarTemp    = $orcamento->Dias_Vencimento;
+                $diasParaPagarParceiro  = $orcamento->Dias_Vencimento + 5;
+                
+                $dateTempFaturar        = strtotime($orcamento->Data_Finalizado." +".$diasParaFaturarTemp."days");
+                $dateTempPagarParceiro  = strtotime($orcamento->Data_Finalizado." +".$diasParaPagarParceiro."days");
+
+                $dataFaturamento        = date("Y-m-d H:i:s", $dateTempFaturar);
+                $dataPagamentoParceiro  = date("Y-m-d H:i:s", Orcamento::verificaPagamentoFimDeSemana($dateTempPagarParceiro));
+
+                //$this->info('Data para faturar orçamento  : '. $dataFaturamento);
+                //$this->info('Data para pagar parceiro     : '. $dataPagamentoParceiro);
+
+                $data = array(
+                        'nomeCliente'            => $orcamento->Nome,
+                        'nomeFantasiaCliente'    => $orcamento->Nome_Fantasia,
+                        'idOrcamento'            => $orcamento->Workflow_ID,
+                        'tituloOrcamento'        => $orcamento->Orc_titulo,
+                        'valorTotalOrcamento'    => $orcamento->Valor_Total_Proposta,
+                        'statusOrcamento'        => $orcamento->Status,
+                        'tipoPagamento'          => $orcamento->tipoPagamento,
+                        'dataVencimento'         => $dataFaturamento,
+                        'dataVencimentoParceiro' => $dataPagamentoParceiro,
+                        'dadosParceiro'          => $dadosParceiro
+                            
+                    );
+
+                //Teste de envio de email para parceiro recem cadastrado
+                Mail::send('emails.aviso_faturamento', $data, function($message)
+                {
+                    // Endereço de envio de aviso de orçamentos definido via hardcoded
+                    // Implementar uma forma de configurar endereço de email via sistema.
+                    if($orcamento->Nome != ''){
+
+                        $nomeCliente = $orcamento->Nome;
+                    }else{
+                        $nomeCliente = $orcamento->Nome_Fantasia;
+                    }
+
+                    $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Financeiro')
+                            ->from('noreply@sistema.eficazsystem.com.br')
+                            ->subject('Orçamentos fechados EficazSystem,'.$nomeCliente.' !');
+                                
+
+                });
 
             }
 

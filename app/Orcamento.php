@@ -44,4 +44,56 @@ class Orcamento extends Model
     	}
 
     }
+
+
+    // Retorna o valor da comisão, já com os valores de imposto e porcentagem descontado
+
+    public static function comissaoOrcamentoAulso($valorTotalOrcamento){
+
+        /*
+            preço liquido = Preço final - 18% de imposto
+            total a pagar = preço liquido - 10%
+        */
+
+        $valorLiquido =  $valorTotalOrcamento - (($valorTotalOrcamento / 100) * 18);
+        $valorComisao =  ($valorLiquido / 100) * 10;
+
+        return $valorComisao;
+
+    }
+
+    public static function verificaPagamentoFimDeSemana($dataOriginal){
+
+        $dateTemp   = $dataOriginal;
+
+        $date       = date("l", $dateTemp);
+
+        switch ($date) {
+            case 'Saturday':
+            
+                $dateTemp = strtotime($dataFinalizado." + 2 days");
+
+                return $dateTemp;
+
+            break;
+
+            case 'Sunday':
+
+                $dateTemp = strtotime($dataFinalizado." + 1 days");
+
+                return $dateTemp;
+
+            break;
+                                
+            default:
+                                    
+                return $dateTemp;
+
+            break;
+        }
+
+    }
+
+
+
 }

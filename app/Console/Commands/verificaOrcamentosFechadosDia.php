@@ -189,7 +189,7 @@ class verificaOrcamentosFechadosDia extends Command
 
                     }
 
-                    dd($parceiro);
+                    dd($parceiro->parceiro);
 
                     foreach ( $parceiro['parceiro'] as $parceiroConta )
                     {  

@@ -71,7 +71,7 @@ class Orcamento extends Model
         switch ($date) {
             case 'Saturday':
             
-                $dateTemp = strtotime($dataFinalizado." + 2 days");
+                $dateTemp = strtotime($dataOriginal." + 2 days");
 
                 return $dateTemp;
 
@@ -79,7 +79,7 @@ class Orcamento extends Model
 
             case 'Sunday':
 
-                $dateTemp = strtotime($dataFinalizado." + 1 days");
+                $dateTemp = strtotime($dataOriginal." + 1 days");
 
                 return $dateTemp;
 

@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use DB;
+use Mail;
+use App\Mail\OrcamentosFechadosMailable;
 use App\Orcamento;
 use App\Orcamento_follow;
 use App\Orcamentos_propostas;
@@ -218,23 +220,29 @@ class verificaOrcamentosFechadosDia extends Command
                     );
 
                 //Teste de envio de email para parceiro recem cadastrado
-                Mail::send('emails.aviso_faturamento', $data, function($message)
-                {
-                    // Endereço de envio de aviso de orçamentos definido via hardcoded
-                    // Implementar uma forma de configurar endereço de email via sistema.
-                    if($orcamento->Nome != ''){
+                // Mail::send('emails.aviso_faturamento', $data, function($message)
+                // {
+                //     // Endereço de envio de aviso de orçamentos definido via hardcoded
+                //     // Implementar uma forma de configurar endereço de email via sistema.
+                //     if($orcamento->Nome != ''){
 
-                        $nomeCliente = $orcamento->Nome;
-                    }else{
-                        $nomeCliente = $orcamento->Nome_Fantasia;
-                    }
+                //         $nomeCliente = $orcamento->Nome;
+                //     }else{
+                //         $nomeCliente = $orcamento->Nome_Fantasia;
+                //     }
 
-                    $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Financeiro')
-                            ->from('noreply@sistema.eficazsystem.com.br')
-                            ->subject('Orçamentos fechados EficazSystem,'.$nomeCliente.' !');
-                                
+                //     $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Financeiro')
+                //             ->from('noreply@sistema.eficazsystem.com.br')
+                //             ->subject('Orçamentos fechados EficazSystem,'.$nomeCliente.' !');
 
-                });
+                // });
+
+
+                /*
+                 * Envio de email para Laravel 5.3
+                 */
+
+                Mail::to('sistemaeficaz@sistema.eficazsystem.com.br')->send(new OrcamentosFechadosMailable($data));
 
             }
 

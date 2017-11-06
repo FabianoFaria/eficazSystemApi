@@ -14,20 +14,16 @@
 
         		<h3>Olá Financeiro</h3>
 
-        		<p>
-        			O parceiro {{ $dadosVendedor->nome_vendedor }} efetuou a solicitação de pagamento das comissões dos seguintes orçamentos:
-        		</p>
-
-        		@if( $nomeFantasiaCliente != '')
+        		@if( $dadosVendedor['nomeFantasiaCliente'] != '')
 
     				<p>
-	        			Foi concluído um orçamento para o cliente : {{ $nomeFantasiaCliente }}
+	        			Foi concluído um orçamento para o cliente : {{ $dadosVendedor['nomeFantasiaCliente'] }}
 	        		</p>
 
     			@else
 
     				<p>
-	        			Foi concluído um orçamento para o cliente : {{ $nomeCliente }}
+	        			Foi concluído um orçamento para o cliente : {{ $dadosVendedor['nomeCliente'] }}
 	        		</p>
 
     			@endif
@@ -53,30 +49,30 @@
 
 		            	<tr>
 		            		<td>
-			    				@if( $nomeFantasiaCliente != '')
-			    					{{ $nomeFantasiaCliente }}
+			    				@if( $dadosVendedor['nomeFantasiaCliente'] != '')
+			    					{{ $dadosVendedor['nomeFantasiaCliente'] }}
 			    				@else
-			    					{{ $nomeCliente }}
+			    					{{ $dadosVendedor['nomeCliente'] }}
 			    				@endif
 			    			</td>
 			    			<td>
-			    				{{ $idOrcamento }}
+			    				{{ $dadosVendedor['idOrcamento'] }}
 			    			</td>
 			    			<td>
-			    				{{ $tituloOrcamento }}
+			    				{{ $dadosVendedor['tituloOrcamento'] }}
 			    			</td>
 			    			<td>
 			    				{{--*/ 
-				                    $data  = $dataVencimento;
+				                    $data  = $dadosVendedor['dataVencimento'];
 				                    $teste = explode(' ',$data); 
 				                    echo implode('/',array_reverse(explode('-', $teste[0])));
 				                /*--}}
 			    			</td>
 			    			<td>
-			    				{{ $tipoPagamento }}
+			    				{{ $dadosVendedor['tipoPagamento'] }}
 			    			</td>
 			    			<td>
-			    				R$ {{ number_format($valorTotalOrcamento, 2) }}
+			    				R$ {{ number_format($dadosVendedor['valorTotalOrcamento'], 2) }}
 			    			</td>
 		            	</tr>
 		            </tbody>
@@ -86,7 +82,7 @@
 
     			<hr>
 
-    			@if(!empty($dadosParceiro))
+    			@if(!empty($dadosVendedor['dadosParceiro']))
 
 
     				<h3>
@@ -99,25 +95,67 @@
     					<thead>
 			                <tr>
 			                	<th>Nome do parceiro</th>
-			                	<th>Id orçamento</th>
-			                    <th>Título</th>
-			                    <th>Data para faturar</th>
-			                    <th>Tipo de pagamento</th>
-			                    <th>Valor do pagamento</th>
+			                	<th>Email</th>
+			                    <th>Data para pagar parceiro</th>
+			                    <th>Banco</th>
+			                    <th>Agência</th>
+			                    <th>Número</th>
+			                    <th>Total comissão para pagar</th>
 			                </tr>
 			            </thead>
 			            <tbody>
 			            	<tr>
+			            		<td>
+
+			            			{{ $dadosVendedor['dadosParceiro']['nomeParceiro'] }}
+
+			            		</td>
 
 			            		<td>
-			    						{{ number_format($orcamento['Valor_Vencimento'], 2) }}
-			    					</td>
-			    					<td>
-			    						<a href="https://parcerias.eficazsystem.com.br/marcarComoPago/{{ $orcamento['Workflow_ID'] }}" style="background: #222222; border: 15px solid #222222; font-family: sans-serif; font-size: 13px; line-height: 1.1; text-align: center; text-decoration: none; display: block; border-radius: 3px; font-weight: bold;" class="button-a">
+
+			            			{{ $dadosVendedor['dadosParceiro']['emailParceiro'] }}
+
+			            		</td>
+
+			            		<td>
+					    			{{--*/ 
+						                $dataParc  = $dadosVendedor['dataVencimentoParceiro'];
+						                $testeParc = explode(' ',$dataParc); 
+						                echo implode('/',array_reverse(explode('-', $testeParc[0])));
+						            /*--}}
+					    		</td>
+
+			            		<td>
+
+			            			{{ $dadosVendedor['dadosParceiro']['nome_instituicao_bancaria'] }}
+
+			            		</td>
+
+			            		<td>
+
+			            			{{ $dadosVendedor['dadosParceiro']['agencia'] }}
+
+			            		</td>
+
+			            		<td>
+
+			            			{{ $dadosVendedor['dadosParceiro']['numero_conta'] }}
+
+			            		</td>
+
+			            		<td>
+
+			            			R$ {{ number_format($dadosVendedor['dadosParceiro']['valorCommicao'], 2) }}
+
+			            		</td>
+
+			            	
+			    				<!-- 	<td>
+			    						<a href="https://parcerias.eficazsystem.com.br/marcarComoPago/{{ $dadosVendedor['dadosParceiro']['idParceiroSistema'] }}" style="background: #222222; border: 15px solid #222222; font-family: sans-serif; font-size: 13px; line-height: 1.1; text-align: center; text-decoration: none; display: block; border-radius: 3px; font-weight: bold;" class="button-a">
                                     &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ffffff">Registrar pagamento de comissão</span>&nbsp;&nbsp;&nbsp;&nbsp;
                             			</a>
 			    					</td>
-			    				</tr>
+			    				</tr> -->
 
 
 			            	</tr>
@@ -130,18 +168,19 @@
     			@endif
 
 			    					
-
-			   		
 			   	<!-- 
 
-						'idParceiroSistema'         => $parceiroConta['id_parceiro_sistema'],
-                        'nomeParceiro'              => $parceiroConta['nome_vendedor'],
-                        'emailParceiro'             => $parceiroConta['email_usuario'],
-                        'nome_conta'                => $parceiroConta['nome_conta'],
-                        'agencia'                   => $parceiroConta['agencia'],
-                        'numero_conta'              => $parceiroConta['numero_conta'],
-                        'nome_instituicao_bancaria' => $parceiroConta['nome_instituicao_bancaria'],
-                        'valorCommicao'             => $valorCommicao
+					'idParceiroSistema'         => $parceiroConta['id_parceiro_sistema'],
+                    'nomeParceiro'              => $parceiroConta['nome_vendedor'],
+                    'emailParceiro'             => $parceiroConta['email_usuario'],
+                    'nome_conta'                => $parceiroConta['nome_conta'],
+                    'agencia'                   => $parceiroConta['agencia'],
+                    'numero_conta'              => $parceiroConta['numero_conta'],
+                    'nome_instituicao_bancaria' => $parceiroConta['nome_instituicao_bancaria'],
+                    'valorCommicao'             => $valorCommicao
+
+
+                    dataVencimentoParceiro
 
 			   	-->
 

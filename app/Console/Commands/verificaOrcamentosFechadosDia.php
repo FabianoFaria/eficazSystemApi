@@ -197,13 +197,13 @@ class verificaOrcamentosFechadosDia extends Command
                         //$this->line('Parceiro para receber commisao: '.$parceiroConta['nome_vendedor'].' email do parceiro : '.$parceiroConta['email_usuario'].' Valor da comissao: '.$valorCommicao);
 
                         $dadosParceiro  = array(
-                                'idParceiroSistema'         => $parceiroConta['id_parceiro_sistema'],
-                                'nomeParceiro'              => $parceiroConta['nome_vendedor'],
-                                'emailParceiro'             => $parceiroConta['email_usuario'],
-                                'nome_conta'                => $parceiroConta['nome_conta'],
-                                'agencia'                   => $parceiroConta['agencia'],
-                                'numero_conta'              => $parceiroConta['numero_conta'],
-                                'nome_instituicao_bancaria' => $parceiroConta['nome_instituicao_bancaria'],
+                                'idParceiroSistema'         => $parceiroConta->id_parceiro_sistema,
+                                'nomeParceiro'              => $parceiroConta->nome_vendedor,
+                                'emailParceiro'             => $parceiroConta->email_usuario,
+                                'nome_conta'                => $parceiroConta->nome_conta,
+                                'agencia'                   => $parceiroConta->agencia,
+                                'numero_conta'              => $parceiroConta->numero_conta,
+                                'nome_instituicao_bancaria' => $parceiroConta->nome_instituicao_bancaria,
                                 'valorCommicao'             => $valorCommicao
                             );
 

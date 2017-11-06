@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
+        'domain' => env('api.eficazsystem.com.br'),
+        'secret' => env('0e9c2102ba30294b86baa65db52f1204'),
     ],
 
     'ses' => [

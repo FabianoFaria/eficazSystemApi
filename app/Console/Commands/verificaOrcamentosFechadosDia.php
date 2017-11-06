@@ -136,7 +136,24 @@ class verificaOrcamentosFechadosDia extends Command
                         $r = $client->get('https://parcerias.eficazsystem.com.br/dadosParceiro/'.$orcamento->Parceiro_Origem_ID);
 
                         $statusRequisicao   = $r->getStatusCode();
-                        $resultado          = $r->json();
+                        //$resultado          = $r->json();
+                        $resultado          = json_decode($r->getBody());
+
+                        /*
+
+                            $response = $client->get(
+                                'https://www.waytwo.com/api/v1/otp/',
+                                [
+                                    'query' => [
+                                        'app_id' => '9e04999b6924bd',
+                                        'access_token' => 'c493389e67bd7e1',
+                                        'mobile' => ''
+                                    ]
+                                ]
+                            )->json();
+
+
+                        */
 
                     }catch(RequestException $e){
 

@@ -102,7 +102,10 @@ class verificaOrcamentosFechadosDia extends Command
                                     'opv.Valor_Vencimento',
                                     'opv.Dias_Vencimento',
                                     'tipo.Descr_Tipo',
-                                    'tpPgm.Descr_Tipo'
+                                    'tpPgm.Descr_Tipo',
+                                    'cd.Nome',
+                                    'cd.Nome_Fantasia',
+                                    'cd.Parceiro_Origem_ID'
                                 )
                                 ->get();
 

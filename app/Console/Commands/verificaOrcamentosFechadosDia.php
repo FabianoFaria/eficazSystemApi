@@ -189,9 +189,9 @@ class verificaOrcamentosFechadosDia extends Command
 
                     }
 
-                    dd($parceiro->parceiro);
+                    //dd($parceiro->parceiro);
 
-                    foreach ( $parceiro['parceiro'] as $parceiroConta )
+                    foreach ( $parceiro->parceiro as $parceiroConta )
                     {  
 
                         //$this->line('Parceiro para receber commisao: '.$parceiroConta['nome_vendedor'].' email do parceiro : '.$parceiroConta['email_usuario'].' Valor da comissao: '.$valorCommicao);

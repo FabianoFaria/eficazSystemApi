@@ -4,7 +4,7 @@
 
 
 	<!-- Email Body : BEGIN -->
-    <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#ffffff" width="600" style="margin: auto;" class="email-container">
+    <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#ffffff" width="700" style="margin: auto;" class="email-container">
 
 
     	<!-- 1 Column Text : BEGIN -->
@@ -61,7 +61,14 @@
 			    			<td>
 			    				{{ $dadosVendedor['tituloOrcamento'] }}
 			    			</td>
-			    			<td>
+			    			
+		            	</tr>
+
+		            		<td>
+		            			{{ $dadosVendedor['dataVencimento'] }}
+		            		</td>
+
+		            		<td>
 			    				{{--*/ 
 				                    $data  = $dadosVendedor['dataVencimento'];
 				                    $teste = explode(' ',$data); 
@@ -74,6 +81,8 @@
 			    			<td>
 			    				R$ {{ number_format($dadosVendedor['valorTotalOrcamento'], 2) }}
 			    			</td>
+		            	<tr>
+
 		            	</tr>
 		            </tbody>
 

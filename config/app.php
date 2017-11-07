@@ -52,8 +52,8 @@ return [
     */
 
     //'url' => env('APP_URL', 'http://localhost'),
-    'url' => env('APP_URL', 'http://eficazsystem.com.api/'),
-    //'url' => env('APP_URL', 'http://api.eficazsystem.com.br/'),
+    //'url' => env('APP_URL', 'http://eficazsystem.com.api/'),
+    'url' => env('APP_URL', 'https://api.eficazsystem.com.br/'),
 
 
     /*

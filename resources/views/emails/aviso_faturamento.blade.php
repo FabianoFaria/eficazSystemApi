@@ -64,6 +64,22 @@
 			    			
 		            	</tr>
 
+		            </tbody>
+
+    			</table>
+
+    			<table width="100%">
+
+    				<thead>
+		                <tr>
+		                    <th>Data para faturar</th>
+		                    <th>Tipo de pagamento</th>
+		                    <th>Valor do pagamento</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		            	<tr>
+
 		            		<td>
 		            			{{ $dadosVendedor['dataVencimento'] }}
 		            		</td>
@@ -81,11 +97,9 @@
 			    			<td>
 			    				R$ {{ number_format($dadosVendedor['valorTotalOrcamento'], 2) }}
 			    			</td>
-		            	<tr>
 
 		            	</tr>
 		            </tbody>
-
     			</table>
 
 

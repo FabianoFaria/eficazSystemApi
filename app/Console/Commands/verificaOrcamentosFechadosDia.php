@@ -246,11 +246,11 @@ class verificaOrcamentosFechadosDia extends Command
                 {
                     // Endereço de envio de aviso de orçamentos definido via hardcoded
                     // Implementar uma forma de configurar endereço de email via sistema.
-                    if($this->data->Nome != ''){
+                    if($this->dadosVendedor['Nome'] != ''){
 
-                        $nomeCliente = $this->data->Nome;
+                        $nomeCliente = $this->dadosVendedor->Nome;
                     }else{
-                        $nomeCliente = $this->data->Nome_Fantasia;
+                        $nomeCliente = $this->dadosVendedor->Nome_Fantasia;
                     }
 
                     $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Financeiro')

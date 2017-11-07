@@ -11,15 +11,15 @@
 |
 */
 
+//use Mail;
+use App\Mail\OrcamentosFechadosMailable;
+
 Route::get('/', function () {
     //return view('welcome');
     return Redirect::to('https://parcerias.eficazsystem.com.br');
 });
 
 Route::get('/enviar', function () {
-
-	//use Mail;
-	use App\Mail\OrcamentosFechadosMailable;
 
 	$data = array(
                 'nomeCliente'            => '0',

@@ -92,7 +92,10 @@ class verificaOrcamentosFechadosDia extends Command
                                     ['opp.Situacao_ID','=','1'],
                                     ['opv.Situacao_ID','=','1']
                                 ])
-                                ->groupBy(
+                                ->get();
+
+        /*
+            ->groupBy(
                                     'ow.Workflow_ID',
                                     'ow.Titulo',
                                     'ow.Data_Finalizado',
@@ -107,10 +110,6 @@ class verificaOrcamentosFechadosDia extends Command
                                     'tipo.Descr_Tipo',
                                     'tpPgm.Descr_Tipo'
                                 )
-                                ->first();
-
-        /*
-            
         */
 
         if(!empty($totalOrcamento)){

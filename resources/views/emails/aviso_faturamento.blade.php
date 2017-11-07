@@ -4,7 +4,7 @@
 
 
 	<!-- Email Body : BEGIN -->
-    <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#ffffff" width="700" style="margin: auto;" class="email-container">
+    <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#ffffff" width="700" style="margin: auto;" class="email-container center-on-narrow">
 
 
     	<!-- 1 Column Text : BEGIN -->

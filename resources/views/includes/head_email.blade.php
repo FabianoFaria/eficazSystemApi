@@ -74,7 +74,7 @@
 	    }
 
 	    /* Media Queries */
-	    @media screen and (max-width: 600px) {
+	    @media screen and (max-width: 700px) {
 
 	        .email-container {
 	            width: 100% !important;

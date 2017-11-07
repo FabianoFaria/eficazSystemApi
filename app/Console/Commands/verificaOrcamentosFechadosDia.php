@@ -217,10 +217,7 @@ class verificaOrcamentosFechadosDia extends Command
                 //Corrige o formato da data de pagamento do parceiro
                 $dataTemp                   = $dataPagamentoParceiro;
                 $testeTemp                  = explode(' ',$dataTemp); 
-                $dataPagamentoParceiro      =  implode('/',array_reverse(explode('-', $testeTemp[0])));
-
-                dd($dataTemp, $dataPagamentoParceiro );
-                            
+                $dataPagamentoParceiro      = implode('/',array_reverse(explode('-', $testeTemp[0])));
 
                 //$this->info('Data para faturar orçamento  : '. $dataFaturamento);
                 //$this->info('Data para pagar parceiro     : '. $dataPagamentoParceiro);

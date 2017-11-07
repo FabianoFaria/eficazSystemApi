@@ -252,7 +252,7 @@ class verificaOrcamentosFechadosDia extends Command
 
 
                 // //Teste de envio de email para parceiro recem cadastrado
-                Mail::send('emails.aviso_faturamento', $dadosEmail, function($message) use ($dadosCliente)
+                Mail::send('emails.aviso_faturamento', $dadosCliente, function($message) use ($dadosCliente)
                 {
                     // Endereço de envio de aviso de orçamentos definido via hardcoded
                     // Implementar uma forma de configurar endereço de email via sistema.

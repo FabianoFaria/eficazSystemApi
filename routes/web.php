@@ -17,7 +17,20 @@ Route::get('/', function () {
 });
 
 Route::get('/enviar', function () {
-    $user = User::find(2);
+
+	$data = array(
+                'nomeCliente'            => '0',
+                'nomeFantasiaCliente'    => '0',
+                'idOrcamento'            => '0',
+                'tituloOrcamento'        => '0',
+                'valorTotalOrcamento'    => '0',
+                'statusOrcamento'        => '0',
+                'tipoPagamento'          => '0',
+                'dataVencimento'         => '0',
+                'dataVencimentoParceiro' => '0',
+                'dadosParceiro'          => '0'
+                            
+                );
 
     \Mail::to('sistemaeficaz@sistema.eficazsystem.com.br')->send(new OrcamentosFechadosMailable($data));
 

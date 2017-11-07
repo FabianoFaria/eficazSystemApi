@@ -4,7 +4,7 @@
 
 
 	<!-- Email Body : BEGIN -->
-    <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#ffffff" width="700" style="margin: auto;" class="email-container center-on-narrow">
+    <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#ffffff" width="700" style="margin: auto;" class="email-container">
 
 
     	<!-- 1 Column Text : BEGIN -->
@@ -44,7 +44,7 @@
 		            </thead>
 		            <tbody>
 
-		            	<tr>
+		            	<tr style="text-align: center;">
 		            		<td>
 			    				@if( $dadosVendedor['nomeFantasiaCliente'] != '')
 			    					{{ $dadosVendedor['nomeFantasiaCliente'] }}
@@ -75,7 +75,7 @@
 		                </tr>
 		            </thead>
 		            <tbody>
-		            	<tr>
+		            	<tr style="text-align: center;">
 
 		            		<td>
 			    				{{
@@ -114,7 +114,7 @@
 			                </tr>
 			            </thead>
 			            <tbody>
-			            	<tr>
+			            	<tr style="text-align: center;">
 			            		<td>
 
 			            			{{ $dadosVendedor['dadosParceiro']['nomeParceiro'] }}
@@ -158,7 +158,7 @@
 			                </tr>
 			            </thead>
 			            <tbody>
-			            	<tr>
+			            	<tr style="text-align: center;">
 
 			            		<td>
 

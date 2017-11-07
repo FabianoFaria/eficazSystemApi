@@ -18,6 +18,9 @@ Route::get('/', function () {
 
 Route::get('/enviar', function () {
 
+	//use Mail;
+	use App\Mail\OrcamentosFechadosMailable;
+
 	$data = array(
                 'nomeCliente'            => '0',
                 'nomeFantasiaCliente'    => '0',

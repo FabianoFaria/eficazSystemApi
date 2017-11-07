@@ -241,11 +241,11 @@ class verificaOrcamentosFechadosDia extends Command
                             
                     );
 
-                if($data['Nome'] != ''){
+                if($data['nomeCliente'] != ''){
 
-                    $nomeCliente = $data['Nome'];
+                    $nomeCliente = $data['nomeCliente'];
                 }else{
-                    $nomeCliente = $data['Nome_Fantasia'];
+                    $nomeCliente = $data['nomeFantasiaCliente'];
                 }
 
 

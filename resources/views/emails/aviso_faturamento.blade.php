@@ -78,15 +78,9 @@
 		            	<tr>
 
 		            		<td>
-		            			{{ $dadosVendedor['dataVencimento'] }}
-		            		</td>
-
-		            		<td>
-			    				{{--*/ 
-				                    $data  = $dadosVendedor['dataVencimento'];
-				                    $teste = explode(' ',$data); 
-				                    echo implode('/',array_reverse(explode('-', $teste[0])));
-				                /*--}}
+			    				{{
+			    					$dadosVendedor['dataVencimento'];
+			    				}}
 			    			</td>
 			    			<td>
 			    				{{ $dadosVendedor['tipoPagamento'] }}

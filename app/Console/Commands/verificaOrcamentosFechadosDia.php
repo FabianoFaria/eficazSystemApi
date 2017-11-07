@@ -209,6 +209,17 @@ class verificaOrcamentosFechadosDia extends Command
                 $dataFaturamento        = date("Y-m-d H:i:s", $dateTempFaturar);
                 $dataPagamentoParceiro  = date("Y-m-d H:i:s", Orcamento::verificaPagamentoFimDeSemana($dateTempPagarParceiro));
 
+                //Corrige o formato da data de faturamento
+                $data                   = $dataFaturamento;
+                $teste                  = explode(' ',$data); 
+                $dataFaturamento        = implode('/',array_reverse(explode('-', $teste[0])));
+
+                //Corrige o formato da data de pagamento do parceiro
+                $dataTemp                   = $dataPagamentoParceiro;
+                $testeTemp                  = explode(' ',$dataTemp); 
+                $dataPagamentoParceiro      =  implode('/',array_reverse(explode('-', $testeTemp[0])));
+                            
+
                 //$this->info('Data para faturar orçamento  : '. $dataFaturamento);
                 //$this->info('Data para pagar parceiro     : '. $dataPagamentoParceiro);
 

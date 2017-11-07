@@ -11,8 +11,6 @@
 |
 */
 
-use Mail;
-use App\Mail\OrcamentosFechadosMailable;
 
 Route::get('/', function () {
     //return view('welcome');

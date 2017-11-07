@@ -94,24 +94,23 @@ class verificaOrcamentosFechadosDia extends Command
                                 ])
                                 ->groupBy(
                                     'ow.Workflow_ID',
-                                    'ow.Titulo'
-                                )
-                                ->get();
-
-        /*
-            
-             'ow.Data_Finalizado',
                                     'ow.Titulo',
+                                    'ow.Data_Finalizado',
+                                    'cd.Nome',
+                                    'cd.Nome_Fantasia',
+                                    'cd.Parceiro_Origem_ID',
                                     'op.Titulo',
                                     'op.Proposta_ID',
                                     'opv.Data_Vencimento',
                                     'opv.Valor_Vencimento',
                                     'opv.Dias_Vencimento',
                                     'tipo.Descr_Tipo',
-                                    'tpPgm.Descr_Tipo',
-                                    'cd.Nome',
-                                    'cd.Nome_Fantasia',
-                                    'cd.Parceiro_Origem_ID',
+                                    'tpPgm.Descr_Tipo'
+                                )
+                                ->first();
+
+        /*
+            
         */
 
         if(!empty($totalOrcamento)){

@@ -40,9 +40,6 @@
 		                	<th>Cliente</th>
 		                	<th>Id orçamento</th>
 		                    <th>Título</th>
-		                    <th>Data para faturar</th>
-		                    <th>Tipo de pagamento</th>
-		                    <th>Valor do pagamento</th>
 		                </tr>
 		            </thead>
 		            <tbody>

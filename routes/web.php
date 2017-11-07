@@ -11,7 +11,7 @@
 |
 */
 
-//use Mail;
+use Mail;
 use App\Mail\OrcamentosFechadosMailable;
 
 Route::get('/', function () {
@@ -35,7 +35,7 @@ Route::get('/enviar', function () {
                             
                 );
 
-    \Mail::to('sistemaeficaz@sistema.eficazsystem.com.br')->send(new OrcamentosFechadosMailable($data));
+    Mail::to('sistemaeficaz@sistema.eficazsystem.com.br')->send(new OrcamentosFechadosMailable($data));
 
     return "done";
 });

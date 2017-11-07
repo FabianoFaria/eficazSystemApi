@@ -241,18 +241,20 @@ class verificaOrcamentosFechadosDia extends Command
                             
                     );
 
+                if($data['Nome'] != ''){
+
+                    $nomeCliente = $data['Nome'];
+                }else{
+                    $nomeCliente = $data['Nome_Fantasia'];
+                }
+
+
                 //Teste de envio de email para parceiro recem cadastrado
                 Mail::send('emails.aviso_faturamento', ['dadosVendedor' => $data], function($message)
                 {
                     // Endereço de envio de aviso de orçamentos definido via hardcoded
                     // Implementar uma forma de configurar endereço de email via sistema.
-                    if($this->dadosVendedor['Nome'] != ''){
-
-                        $nomeCliente = $this->dadosVendedor->Nome;
-                    }else{
-                        $nomeCliente = $this->dadosVendedor->Nome_Fantasia;
-                    }
-
+                  
                     $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Financeiro')
                             ->from('noreply@sistema.eficazsystem.com.br')
                             ->subject('Orçamentos fechados EficazSystem,'.$nomeCliente.' !');

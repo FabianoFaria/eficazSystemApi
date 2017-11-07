@@ -259,7 +259,7 @@ class verificaOrcamentosFechadosDia extends Command
                   
                     $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Financeiro')
                             ->from('noreply@sistema.eficazsystem.com.br')
-                            ->subject('Orçamentos fechados EficazSystem,'.$dadosEmail['nomeCliente'].' !');
+                            ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
 
                 });
 

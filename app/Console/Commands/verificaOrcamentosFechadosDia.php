@@ -219,8 +219,6 @@ class verificaOrcamentosFechadosDia extends Command
                 $testeTemp                  = explode(' ',$dataTemp); 
                 $dataPagamentoParceiro      = implode('/',array_reverse(explode('-', $testeTemp[0])));
 
-                dd($dataTemp, $dataPagamentoParceiro);
-
                 //$this->info('Data para faturar orçamento  : '. $dataFaturamento);
                 //$this->info('Data para pagar parceiro     : '. $dataPagamentoParceiro);
 
@@ -240,12 +238,12 @@ class verificaOrcamentosFechadosDia extends Command
 
                 if($data['nomeCliente'] != ''){
 
-                    $nomeCliente = $data['nomeCliente'];
+                    $nomeCliente    = $data['nomeCliente'];
                 }else{
-                    $nomeCliente = $data['nomeFantasiaCliente'];
+                    $nomeCliente    = $data['nomeFantasiaCliente'];
                 }
 
-                $dadosCliente = ['dadosVendedor' => $data, 'nomeCliente' => $nomeCliente];
+                $dadosCliente       = ['dadosVendedor' => $data, 'nomeCliente' => $nomeCliente];
 
 
                 // //Teste de envio de email para parceiro recem cadastrado

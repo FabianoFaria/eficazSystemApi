@@ -203,8 +203,8 @@ class verificaOrcamentosFechadosDia extends Command
                 $diasParaFaturarTemp    = $orcamento->Dias_Vencimento;
                 $diasParaPagarParceiro  = $orcamento->Dias_Vencimento + 5;
                 
-                $dateTempFaturar        = strtotime($orcamento->Data_Finalizado." +".$diasParaFaturarTemp."days");
-                $dateTempPagarParceiro  = strtotime($orcamento->Data_Finalizado." +".$diasParaPagarParceiro."days");
+                $dateTempFaturar        = strtotime($orcamento->Data_Finalizado." + ".$diasParaFaturarTemp."days");
+                $dateTempPagarParceiro  = strtotime($orcamento->Data_Finalizado." + ".$diasParaPagarParceiro."days");
 
                 $dataFaturamento        = date("Y-m-d H:i:s", $dateTempFaturar);
                 $dataPagamentoParceiro  = date("Y-m-d H:i:s", Orcamento::verificaPagamentoFimDeSemana($dateTempPagarParceiro));
@@ -218,6 +218,8 @@ class verificaOrcamentosFechadosDia extends Command
                 $dataTemp                   = $dataPagamentoParceiro;
                 $testeTemp                  = explode(' ',$dataTemp); 
                 $dataPagamentoParceiro      = implode('/',array_reverse(explode('-', $testeTemp[0])));
+
+                dd($dataTemp, $dataPagamentoParceiro);
 
                 //$this->info('Data para faturar orçamento  : '. $dataFaturamento);
                 //$this->info('Data para pagar parceiro     : '. $dataPagamentoParceiro);

@@ -128,9 +128,7 @@
 			            		</td>
 
 			            		<td>
-					    			{{
-						                $dadosVendedor['dataVencimentoParceiro']
-						            }}
+					    			{{ $dadosVendedor['dataVencimentoParceiro'] }}
 					    		</td>
 
 			            		

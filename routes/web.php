@@ -15,3 +15,11 @@ Route::get('/', function () {
     //return view('welcome');
     return Redirect::to('https://parcerias.eficazsystem.com.br');
 });
+
+Route::get('/enviar', function () {
+    $user = User::find(2);
+
+    \Mail::to('sistemaeficaz@sistema.eficazsystem.com.br')->send(new OrcamentosFechadosMailable($data));
+
+    return "done";
+});

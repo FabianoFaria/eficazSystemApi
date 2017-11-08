@@ -483,7 +483,7 @@ class OrcamentoController extends Controller
                                 DB::raw('upper(t.Descr_Tipo) as Status'),
                                 'ow.Situacao_ID as Situacao_ID',
                                 'ow.Workflow_ID',
-                                'ow.Titulo',
+                                'ow.Titulo as Orc_titulo',
                                 'ow.Data_Finalizado',
                                 DB::raw('coalesce(tp.Titulo_Tabela, "Tabela Padrão") as Tabela_Preco')
                             )

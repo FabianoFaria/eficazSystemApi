@@ -93,6 +93,24 @@
 		            </tbody>
     			</table>
 
+    			<table width="75%">
+    				<thead>
+		                <tr>
+		                    <th>Id proposta</th>
+		                    <th>Título da proposta</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		            	<tr style="text-align: center;">
+		            		<td>
+			    				{{ $dadosVendedor['idProposta'] }}
+			    			</td>
+			    			<td>
+			    				{{ $dadosVendedor['tituloProposta'] }}
+			    			</td>
+		            	</tr>
+		            </tbody>
+    			</table>          
 
     			<hr>
 
@@ -129,6 +147,8 @@
 
 			            		<td>
 					    			{{ $dadosVendedor['dataVencimento'] }} + 5 dias
+					    			{{ $dadosVendedor['dataVencimentoParceiro'] }}
+
 					    		</td>
 
 			            	</tr>

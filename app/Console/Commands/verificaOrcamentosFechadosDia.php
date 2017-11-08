@@ -57,7 +57,7 @@ class verificaOrcamentosFechadosDia extends Command
         // $this->error("Ops, that should not happen.");
 
         //DB::table('users')->where('active', 0)->delete();
-        $hoje = date('Y-m-d');
+        $hoje = date('Y-m-d h');
 
         $totalOrcamento     = DB::table('orcamentos_propostas AS op')
                                 ->join('orcamentos_workflows AS ow', 'ow.Workflow_ID', '=','op.Workflow_ID')
@@ -85,8 +85,8 @@ class verificaOrcamentosFechadosDia extends Command
                                     'tpPgm.Descr_Tipo AS tipoPagamento'
                                 )
                                 ->where([
-                                    ['ow.Data_Finalizado','>', '2017-10-01 00:00:00'],
-                                    ['ow.Data_Finalizado','<', '2017-10-31 23:59:59'],
+                                    ['ow.Data_Finalizado','>', $hoje.':00:00'],
+                                    ['ow.Data_Finalizado','<', $hoje.':59:59'],
                                     ['ow.Situacao_ID','=','113'],
                                     ['op.Situacao_ID','=','1'],
                                     ['opp.Situacao_ID','=','1'],
@@ -236,8 +236,9 @@ class verificaOrcamentosFechadosDia extends Command
                         'tipoPagamento'          => $orcamento->tipoPagamento,
                         'dataVencimento'         => $dataFaturamento,
                         'dataVencimentoParceiro' => $dataPagamentoParceiro,
-                        'dadosParceiro'          => $dadosParceiro
-                            
+                        'dadosParceiro'          => $dadosParceiro,
+                        'idProposta'             => $orcamento->Proposta_ID,
+                        'tituloProposta'         => $orcamento->Titulo                      
                     );
 
                 if($data['nomeCliente'] != ''){

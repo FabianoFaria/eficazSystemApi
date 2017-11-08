@@ -482,6 +482,9 @@ class OrcamentoController extends Controller
                                 'op.Status_ID as Status_ID',
                                 DB::raw('upper(t.Descr_Tipo) as Status'),
                                 'ow.Situacao_ID as Situacao_ID',
+                                'ow.Workflow_ID',
+                                'ow.Titulo',
+                                'ow.Data_Finalizado',
                                 DB::raw('coalesce(tp.Titulo_Tabela, "Tabela Padrão") as Tabela_Preco')
                             )
                             ->where([
@@ -497,6 +500,9 @@ class OrcamentoController extends Controller
                                 'op.Usuario_Cadastro_ID',
                                 'op.Status_ID',
                                 'ow.Situacao_ID',
+                                'ow.Workflow_ID',
+                                'ow.Titulo',
+                                'ow.Data_Finalizado',
                                 'u.Nome',
                                 't.Descr_Tipo',
                                 'tp.Titulo_Tabela'

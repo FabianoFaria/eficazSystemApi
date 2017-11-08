@@ -93,11 +93,12 @@
 		            </tbody>
     			</table>
 
-    			<table width="75%">
+    			<table width="100%">
     				<thead>
 		                <tr>
 		                    <th>Id proposta</th>
 		                    <th>Título da proposta</th>
+		                    <th></th>
 		                </tr>
 		            </thead>
 		            <tbody>
@@ -107,6 +108,8 @@
 			    			</td>
 			    			<td>
 			    				{{ $dadosVendedor['tituloProposta'] }}
+			    			</td>
+			    			<td>
 			    			</td>
 		            	</tr>
 		            </tbody>

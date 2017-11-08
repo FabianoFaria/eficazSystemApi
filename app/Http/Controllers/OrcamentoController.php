@@ -482,7 +482,7 @@ class OrcamentoController extends Controller
                                 'op.Status_ID as Status_ID',
                                 'upper(t.Descr_Tipo) as Status',
                                 'ow.Situacao_ID as Situacao_ID',
-                                'coalesce(tp.Titulo_Tabela,'Tabela Padrão') as Tabela_Preco'
+                                'coalesce(tp.Titulo_Tabela, "Tabela Padrão") as Tabela_Preco'
                             )
                             ->where([
                                 ['op.Proposta_ID','=', $id],
@@ -490,7 +490,7 @@ class OrcamentoController extends Controller
                                 ['opp.Situacao_ID','=','1']
                             ])
                             ->get();
-                            
+
         if(empty($dadosProposta)){  
             return response()->json(null, 200);
         }else{

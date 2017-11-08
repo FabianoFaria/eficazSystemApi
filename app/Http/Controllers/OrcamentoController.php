@@ -485,7 +485,7 @@ class OrcamentoController extends Controller
                                 'coalesce(tp.Titulo_Tabela, "Tabela Padrão") as Tabela_Preco'
                             )
                             ->where([
-                                ['op.Proposta_ID','=', $id],
+                                ['op.Proposta_ID','=', $idProposta],
                                 ['op.Situacao_ID','=','1'],
                                 ['opp.Situacao_ID','=','1']
                             ])

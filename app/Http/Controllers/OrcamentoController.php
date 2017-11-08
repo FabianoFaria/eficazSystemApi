@@ -480,7 +480,7 @@ class OrcamentoController extends Controller
                                 DB::raw('SUM(opp.Quantidade * opp.Valor_Venda_Unitario) as Valor_Total_Proposta'),
                                 DB::raw('count(opp.Proposta_Produto_ID) as Total_Itens_Proposta'),
                                 'op.Status_ID as Status_ID',
-                                'upper(t.Descr_Tipo) as Status',
+                                DB::raw('upper(t.Descr_Tipo) as Status'),
                                 'ow.Situacao_ID as Situacao_ID',
                                 'coalesce(tp.Titulo_Tabela, "Tabela Padrão") as Tabela_Preco'
                             )

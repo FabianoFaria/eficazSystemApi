@@ -495,6 +495,8 @@ class OrcamentoController extends Controller
                                 'op.Titulo',
                                 'op.Data_Cadastro',
                                 'op.Usuario_Cadastro_ID',
+                                'op.Status_ID',
+                                'ow.Situacao_ID',
                                 'u.Nome'
                             )
                             ->get();

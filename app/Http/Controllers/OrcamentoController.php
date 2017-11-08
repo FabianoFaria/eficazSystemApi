@@ -489,6 +489,14 @@ class OrcamentoController extends Controller
                                 ['op.Situacao_ID','=','1'],
                                 ['opp.Situacao_ID','=','1']
                             ])
+                            ->groupBy(
+                                'op.Proposta_ID',
+                                'op.Workflow_ID',
+                                'op.Titulo',
+                                'op.Data_Cadastro',
+                                'op.Usuario_Cadastro_ID',
+                                'u.Nome'
+                            )
                             ->get();
 
         if(empty($dadosProposta)){  

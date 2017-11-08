@@ -482,7 +482,7 @@ class OrcamentoController extends Controller
                                 'op.Status_ID as Status_ID',
                                 DB::raw('upper(t.Descr_Tipo) as Status'),
                                 'ow.Situacao_ID as Situacao_ID',
-                                'coalesce(tp.Titulo_Tabela, "Tabela Padrão") as Tabela_Preco'
+                                DB::raw('coalesce(tp.Titulo_Tabela, "Tabela Padrão") as Tabela_Preco')
                             )
                             ->where([
                                 ['op.Proposta_ID','=', $idProposta],

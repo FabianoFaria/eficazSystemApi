@@ -6,5 +6,6 @@
 Homestead.json
 Homestead.yaml
 /config/database.php
+/config
 .env
 

@@ -1,11 +1,12 @@
 /node_modules
-/public/storage
-/storage/*.key
-/vendor
+public/storage
+storage/*.key
+vendor
 /.idea
 Homestead.json
 Homestead.yaml
-/config/database.php
-/config
+config/database.php
+config
 .env
 
+config/services.php

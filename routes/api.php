@@ -84,3 +84,5 @@ Route::get('totalOrcamentosParceiro/{id}','OrcamentoController@totalOrcamentosPa
 Route::get('listarOrcamentoCliente/{id}','OrcamentoController@listarOrcamentosCliente');
 // Listar os orçamentos e ou chamados relacioandos ao parceiro
 Route::get('listarOrcamento/{id}','OrcamentoController@statusOrcamentosParceiro');
+// Listar os detalhes da proposta de um determinado orçamento
+Route::get('carregarDadosProposta/{id}','OrcamentoController@carregarDadosProposta');

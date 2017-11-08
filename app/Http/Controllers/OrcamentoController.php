@@ -456,6 +456,85 @@ class OrcamentoController extends Controller
     }
 
     /**
+     * Carrega os dados da proposta de determinado orçamento.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function carregarDadosProposta($idProposta){
+
+        $dadosProposta  = DB::table('orcamentos_propostas AS op')
+                            ->join('orcamentos_workflows AS ow', 'ow.Workflow_ID', '=','op.Workflow_ID')
+                            ->leftJoin('produtos_tabelas_precos AS tp', 'tp.Tabela_Preco_ID', '=','op.Tabela_Preco_ID')
+                            ->leftJoin('orcamentos_propostas_produtos AS opp', 'opp.Proposta_ID', '=','op.Proposta_ID')
+                            ->leftJoin('cadastros_dados AS u', 'u.Cadastro_ID', '=','op.Usuario_Cadastro_ID')
+                            ->leftJoin('tipo AS t', 't.Tipo_ID', '=','op.Status_ID')
+                            ->select(
+                                'op.Proposta_ID',
+                                'op.Workflow_ID',
+                                'op.Titulo',
+                                'op.Data_Cadastro',
+                                'op.Usuario_Cadastro_ID',
+                                'u.Nome AS Usuario',
+                                DB::raw('SUM(opp.Quantidade) as Quantidade_Total_Proposta'),
+                                DB::raw('SUM(opp.Quantidade * opp.Valor_Venda_Unitario) as Valor_Total_Proposta'),
+                                DB::raw('count(opp.Proposta_Produto_ID) as Total_Itens_Proposta'),
+                                'op.Status_ID as Status_ID',
+                                'upper(t.Descr_Tipo) as Status',
+                                'ow.Situacao_ID as Situacao_ID',
+                                'coalesce(tp.Titulo_Tabela,'Tabela Padrão') as Tabela_Preco'
+                            )
+                            ->where([
+                                ['op.Proposta_ID','=', $id],
+                                ['op.Situacao_ID','=','1'],
+                                ['opp.Situacao_ID','=','1']
+                            ])
+                            ->get();
+                            
+        if(empty($dadosProposta)){  
+            return response()->json(null, 200);
+        }else{
+            return response()->json($dadosProposta, 200);
+        }
+
+        /*
+            select 
+            op.Proposta_ID, 
+            op.Workflow_ID, 
+            op.Titulo, 
+            op.Data_Cadastro, 
+            op.Usuario_Cadastro_ID, 
+            u.Nome AS Usuario,
+            SUM(opp.Quantidade) as Quantidade_Total_Proposta, 
+            SUM(opp.Quantidade * opp.Valor_Venda_Unitario) as Valor_Total_Proposta,
+            count(opp.Proposta_Produto_ID) as Total_Itens_Proposta, 
+            op.Status_ID as Status_ID, 
+            upper(t.Descr_Tipo) as Status,
+            ow.Situacao_ID as Situacao_ID, 
+            coalesce(tp.Titulo_Tabela,'Tabela Padrão') as Tabela_Preco
+                            from orcamentos_propostas op
+
+                                inner join orcamentos_workflows ow on ow.Workflow_ID = op.Workflow_ID
+                                left join produtos_tabelas_precos tp on tp.Tabela_Preco_ID = op.Tabela_Preco_ID
+                                left join orcamentos_propostas_produtos opp on opp.Proposta_ID = op.Proposta_ID
+                                left join cadastros_dados u ON u.Cadastro_ID = op.Usuario_Cadastro_ID
+                                left join tipo t on t.Tipo_ID = op.Status_ID
+
+                                where op.Proposta_ID = '522' and op.Situacao_ID = 1   and opp.Situacao_ID = 1
+
+                            group by op.Proposta_ID, 
+                            op.Workflow_ID, 
+                            op.Titulo, 
+                            op.Data_Cadastro, 
+                            op.Usuario_Cadastro_ID, 
+                            u.Nome
+
+        */
+
+    }
+
+
+    /**
      * Retorna o total de orçamentos em aberto por um determinado cliente
      *
      * @param  int  $id

@@ -85,8 +85,8 @@ class verificaOrcamentosFechadosDia extends Command
                                     'tpPgm.Descr_Tipo AS tipoPagamento'
                                 )
                                 ->where([
-                                    ['ow.Data_Finalizado','>', '2017-10-01 9:00:00'],
-                                    ['ow.Data_Finalizado','<', '2017-10-31 23:59:59'],
+                                    ['ow.Data_Finalizado','>', $hoje.':00:00'],
+                                    ['ow.Data_Finalizado','<', $hoje.':59:59'],
                                     ['ow.Situacao_ID','=','113'],
                                     ['op.Situacao_ID','=','1'],
                                     ['opp.Situacao_ID','=','1'],

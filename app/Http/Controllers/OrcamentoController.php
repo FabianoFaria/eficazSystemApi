@@ -478,6 +478,7 @@ class OrcamentoController extends Controller
                                 'op.Usuario_Cadastro_ID',
                                 'clie.Nome AS cliente',
                                 'clie.Nome_Fantasia AS cliente_fantasia',
+                                'clie.Parceiro_Origem_ID',
                                 'u.Nome AS Usuario',
                                 DB::raw('SUM(opp.Quantidade) as Quantidade_Total_Proposta'),
                                 DB::raw('SUM(opp.Quantidade * opp.Valor_Venda_Unitario) as Valor_Total_Proposta'),
@@ -509,6 +510,7 @@ class OrcamentoController extends Controller
                                 'u.Nome',
                                 'clie.Nome',
                                 'clie.Nome_Fantasia',
+                                'clie.Parceiro_Origem_ID',
                                 't.Descr_Tipo',
                                 'tp.Titulo_Tabela'
                             )
@@ -532,7 +534,7 @@ class OrcamentoController extends Controller
             SUM(opp.Quantidade * opp.Valor_Venda_Unitario) as Valor_Total_Proposta,
             count(opp.Proposta_Produto_ID) as Total_Itens_Proposta, 
             op.Status_ID as Status_ID, 
-            upper(t.Descr_Tipo) as Status,
+            upper(t.Descr_Tipo) as Status,0
             ow.Situacao_ID as Situacao_ID, 
             coalesce(tp.Titulo_Tabela,'Tabela Padrão') as Tabela_Preco
                             from orcamentos_propostas op

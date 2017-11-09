@@ -469,12 +469,15 @@ class OrcamentoController extends Controller
                             ->leftJoin('orcamentos_propostas_produtos AS opp', 'opp.Proposta_ID', '=','op.Proposta_ID')
                             ->leftJoin('cadastros_dados AS u', 'u.Cadastro_ID', '=','op.Usuario_Cadastro_ID')
                             ->leftJoin('tipo AS t', 't.Tipo_ID', '=','op.Status_ID')
+                            ->leftJoin('cadastros_dados AS clie', 'clie.Cadastro_ID', '=','ow.Solicitante_ID')
                             ->select(
                                 'op.Proposta_ID',
                                 'op.Workflow_ID',
                                 'op.Titulo',
                                 'op.Data_Cadastro',
                                 'op.Usuario_Cadastro_ID',
+                                'clie.Nome AS cliente',
+                                'clie.Nome_Fantasia AS cliente_fantasia',
                                 'u.Nome AS Usuario',
                                 DB::raw('SUM(opp.Quantidade) as Quantidade_Total_Proposta'),
                                 DB::raw('SUM(opp.Quantidade * opp.Valor_Venda_Unitario) as Valor_Total_Proposta'),

@@ -507,6 +507,8 @@ class OrcamentoController extends Controller
                                 'ow.Titulo',
                                 'ow.Data_Finalizado',
                                 'u.Nome',
+                                'clie.Nome',
+                                'clie.Nome_Fantasia',
                                 't.Descr_Tipo',
                                 'tp.Titulo_Tabela'
                             )

@@ -85,8 +85,8 @@ class verificaOrcamentosFechadosDia extends Command
                                     'tpPgm.Descr_Tipo AS tipoPagamento'
                                 )
                                 ->where([
-                                    ['ow.Data_Finalizado','>', '2017-10-01 00:00:00'],
-                                    ['ow.Data_Finalizado','<', '2017-10-31 23:59:59'],
+                                    ['ow.Data_Finalizado','>', $hoje.':00:00'],
+                                    ['ow.Data_Finalizado','<', $hoje.':59:59'],
                                     ['ow.Situacao_ID','=','113'],
                                     ['op.Situacao_ID','=','1'],
                                     ['opp.Situacao_ID','=','1'],
@@ -257,13 +257,13 @@ class verificaOrcamentosFechadosDia extends Command
                     // Endereço de envio de aviso de orçamentos definido via hardcoded
                     // Implementar uma forma de configurar endereço de email via sistema.
                   
-                    $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Sistema')
-                            ->cc('operador03@eficazsystem.com.br', 'Atendimento')
-                            ->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno')
+                    $message->to('sabine.trech@eficazsystem.com.br', 'finaceiro')
                             ->from('noreply@sistema.eficazsystem.com.br')
                             ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
 
                     //->cc('sabine.trech@eficazsystem.com.br', 'finaceiro')
+                    //->cc('operador03@eficazsystem.com.br', 'Atendimento')
+                    //->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno')
 
                     // $message->to('operador03@eficazsystem.com.br', 'Atendimento')
                     //         ->from('noreply@sistema.eficazsystem.com.br')

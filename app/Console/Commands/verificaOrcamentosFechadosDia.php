@@ -258,8 +258,12 @@ class verificaOrcamentosFechadosDia extends Command
                     // Implementar uma forma de configurar endereço de email via sistema.
                   
                     $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Sistema')
+                            ->cc('operador03@eficazsystem.com.br', 'Atendimento')
+                            ->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno')
                             ->from('noreply@sistema.eficazsystem.com.br')
                             ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
+
+                    //->cc('sabine.trech@eficazsystem.com.br', 'finaceiro')
 
                     // $message->to('operador03@eficazsystem.com.br', 'Atendimento')
                     //         ->from('noreply@sistema.eficazsystem.com.br')

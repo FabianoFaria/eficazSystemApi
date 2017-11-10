@@ -261,17 +261,17 @@ class verificaOrcamentosFechadosDia extends Command
                             ->from('noreply@sistema.eficazsystem.com.br')
                             ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
 
-                    $message->to('operador03@eficazsystem.com.br', 'Atendimento')
-                            ->from('noreply@sistema.eficazsystem.com.br')
-                            ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
+                    // $message->to('operador03@eficazsystem.com.br', 'Atendimento')
+                    //         ->from('noreply@sistema.eficazsystem.com.br')
+                    //         ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
 
-                    $message->to('fernanda.trech@eficazsystem.com.br', 'Atendiemtno')
-                            ->from('noreply@sistema.eficazsystem.com.br')
-                            ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
+                    // $message->to('fernanda.trech@eficazsystem.com.br', 'Atendiemtno')
+                    //         ->from('noreply@sistema.eficazsystem.com.br')
+                    //         ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
 
-                    $message->to('fernanda.trech@eficazsystem.com.br', 'Atendiemtno')
-                            ->from('noreply@sistema.eficazsystem.com.br')
-                            ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
+                    // $message->to('fernanda.trech@eficazsystem.com.br', 'Atendiemtno')
+                    //         ->from('noreply@sistema.eficazsystem.com.br')
+                    //         ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
 
                 });
 

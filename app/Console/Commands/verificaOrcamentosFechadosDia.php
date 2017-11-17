@@ -218,7 +218,7 @@ class verificaOrcamentosFechadosDia extends Command
 
                 $dataFaturamento        = date("Y-m-d H:i:s", $dateTempFaturar);
                 $dataPagamentoParceiro  = date("Y-m-d H:i:s", Orcamento::verificaPagamentoFimDeSemana($dateTempPagarParceiro));
-                
+
 
                 //Data de fechamento do orçamento
                 $dataFechamentoOrc      = $orcamento->Data_Finalizado;
@@ -274,7 +274,7 @@ class verificaOrcamentosFechadosDia extends Command
 
                     $message->to('sabine.trech@eficazsystem.com.br', 'finaceiro')
                             ->from('noreply@sistema.eficazsystem.com.br')
-                            ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
+                            ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !')
                             ->cc('sistemaeficaz@sistema.eficazsystem.com.br', 'manutenção')
                             ->cc('operador03@eficazsystem.com.br', 'Atendimento')
                             ->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno');

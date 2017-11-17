@@ -207,12 +207,14 @@ class verificaOrcamentosFechadosDia extends Command
 
                 if(isset($orcamento->Dias_Vencimento)){
                     $diasParaFaturarTemp    = $orcamento->Dias_Vencimento;
+                    $diasParaPagarParceiro  = $orcamento->Dias_Vencimento + 5;
                 }else{
-                    $diasParaFaturarTemp    = 0;
+                    $diasParaFaturarTemp    = 30;
+                    $diasParaPagarParceiro  = $orcamento->Dias_Vencimento + 1;
                 }
 
-                $diasParaPagarParceiro  = $orcamento->Dias_Vencimento + 5;
                 
+
 
                 $this->info('Dias para faturar orçamento temporario : '. $diasParaFaturarTemp);
                 

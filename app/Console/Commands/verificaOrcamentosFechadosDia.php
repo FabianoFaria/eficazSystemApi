@@ -206,12 +206,16 @@ class verificaOrcamentosFechadosDia extends Command
                 //Verificando data para faturamento do orçamento
                 $diasParaFaturarTemp    = $orcamento->Dias_Vencimento;
                 $diasParaPagarParceiro  = $orcamento->Dias_Vencimento + 5;
+
+                $this->info('Data para faturar orçamento temporario : '. $diasParaFaturarTemp);
                 
                 $dateTempFaturar        = strtotime($orcamento->Data_Finalizado." + ".$diasParaFaturarTemp."days");
                 $dateTempPagarParceiro  = strtotime($orcamento->Data_Finalizado." + ".$diasParaPagarParceiro."days");
 
                 $dataFaturamento        = date("Y-m-d H:i:s", $dateTempFaturar);
                 $dataPagamentoParceiro  = date("Y-m-d H:i:s", Orcamento::verificaPagamentoFimDeSemana($dateTempPagarParceiro));
+
+                $this->info('Data para faturar calculado : '. $dataFaturamento);
 
                 //Corrige o formato da data de faturamento
                 $data                   = $dataFaturamento;
@@ -258,12 +262,14 @@ class verificaOrcamentosFechadosDia extends Command
                     // Implementar uma forma de configurar endereço de email via sistema.
                   
                     //$message->to('sabine.trech@eficazsystem.com.br', 'finaceiro')
-                    $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'finaceiro')
-                            ->from('noreply@sistema.eficazsystem.com.br')
-                            ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !')
-                            ->cc('sistemaeficaz@sistema.eficazsystem.com.br', 'manutenção')
-                            ->cc('operador03@eficazsystem.com.br', 'Atendimento')
-                            ->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno');
+                    
+                    #######
+                    // $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'finaceiro')
+                    //         ->from('noreply@sistema.eficazsystem.com.br')
+                    //         ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !')
+                    //         ->cc('sistemaeficaz@sistema.eficazsystem.com.br', 'manutenção')
+                    //         ->cc('operador03@eficazsystem.com.br', 'Atendimento')
+                    //         ->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno');
 
                     // $message->to('operador03@eficazsystem.com.br', 'Atendimento')
                     //         ->from('noreply@sistema.eficazsystem.com.br')

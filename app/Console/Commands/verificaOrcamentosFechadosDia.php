@@ -223,8 +223,8 @@ class verificaOrcamentosFechadosDia extends Command
                 $testeTemp                  = explode(' ',$dataTemp); 
                 $dataPagamentoParceiro      = implode('/',array_reverse(explode('-', $testeTemp[0])));
 
-                //$this->info('Data para faturar orçamento  : '. $dataFaturamento);
-                //$this->info('Data para pagar parceiro     : '. $dataPagamentoParceiro);
+                $this->info('Data para faturar orçamento  : '. $dataFaturamento);
+                $this->info('Data para pagar parceiro     : '. $dataPagamentoParceiro);
 
                 $data = array(
                         'nomeCliente'            => $orcamento->Nome,
@@ -261,9 +261,9 @@ class verificaOrcamentosFechadosDia extends Command
                     $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'finaceiro')
                             ->from('noreply@sistema.eficazsystem.com.br')
                             ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
-                            //->cc('sabine.trech@eficazsystem.com.br', 'finaceiro')
-                            //->cc('operador03@eficazsystem.com.br', 'Atendimento')
-                            //->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno');
+                            ->cc('sistemaeficaz@sistema.eficazsystem.com.br', 'manutenção')
+                            ->cc('operador03@eficazsystem.com.br', 'Atendimento')
+                            ->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno');
 
                     // $message->to('operador03@eficazsystem.com.br', 'Atendimento')
                     //         ->from('noreply@sistema.eficazsystem.com.br')

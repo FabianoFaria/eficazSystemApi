@@ -226,6 +226,11 @@ class verificaOrcamentosFechadosDia extends Command
 
                 $this->info('Data para faturar calculado : '. $dataFaturamento);
 
+                //Data de fechamento do orçamento
+                $dataFechamentoOrc      = $orcamento->Data_Finalizado;
+                $testeDataOrc           = explode(' ',$dataFechamentoOrc);
+                $dataFechamento         = implode('/',array_reverse(explode('-', $testeDataOrc[0]))); 
+
                 //Corrige o formato da data de faturamento
                 $data                   = $dataFaturamento;
                 $teste                  = explode(' ',$data); 
@@ -247,6 +252,7 @@ class verificaOrcamentosFechadosDia extends Command
                         'valorTotalOrcamento'    => $orcamento->Valor_Total_Proposta,
                         'statusOrcamento'        => $orcamento->Status,
                         'tipoPagamento'          => $orcamento->tipoPagamento,
+                        'dataFechamentoOrc'      => $dataFechamento,
                         'dataVencimento'         => $dataFaturamento,
                         'dataVencimentoParceiro' => $dataPagamentoParceiro,
                         'dadosParceiro'          => $dadosParceiro,

@@ -69,7 +69,7 @@
 
     				<thead>
 		                <tr>
-		                    <th>Data para faturar</th>
+		                    <th>Data fechamento do orçamento</th>
 		                    <th>Tipo de pagamento</th>
 		                    <th>Valor do pagamento</th>
 		                </tr>
@@ -79,7 +79,7 @@
 
 		            		<td>
 			    				{{
-			    					$dadosVendedor['dataVencimento']
+			    					$dadosVendedor['dataFechamentoOrc']
 			    				}}
 			    			</td>
 			    			<td>

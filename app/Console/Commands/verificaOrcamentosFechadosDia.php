@@ -58,7 +58,7 @@ class verificaOrcamentosFechadosDia extends Command
 
         //DB::table('users')->where('active', 0)->delete();
         //$hoje = date('Y-m-d h');
-        //$hoje = date('Y-m-d H', strtotime('-1 hour'));
+        $hoje = date('Y-m-d H', strtotime('-1 hour'));
 
         $totalOrcamento     = DB::table('orcamentos_propostas AS op')
                                 ->join('orcamentos_workflows AS ow', 'ow.Workflow_ID', '=','op.Workflow_ID')
@@ -86,8 +86,8 @@ class verificaOrcamentosFechadosDia extends Command
                                     'tpPgm.Descr_Tipo AS tipoPagamento'
                                 )
                                 ->where([
-                                    ['ow.Data_Finalizado','>=', '2017-11-16 00:00:00'],
-                                    ['ow.Data_Finalizado','<=', '2017-11-16 23:59:59'],
+                                    ['ow.Data_Finalizado','>=', $hoje.':00:00'],
+                                    ['ow.Data_Finalizado','<=', $hoje.':59:59'],
                                     ['ow.Situacao_ID','=','113'],
                                     ['op.Situacao_ID','=','1'],
                                     ['opp.Situacao_ID','=','1']
@@ -210,21 +210,15 @@ class verificaOrcamentosFechadosDia extends Command
                     $diasParaPagarParceiro  = $orcamento->Dias_Vencimento + 5;
                 }else{
                     $diasParaFaturarTemp    = 30;
-                    $diasParaPagarParceiro  = $orcamento->Dias_Vencimento + 1;
+                    $diasParaPagarParceiro  = $orcamento->Dias_Vencimento + 5;
                 }
-
-                
-
-
-                $this->info('Dias para faturar orçamento temporario : '. $diasParaFaturarTemp);
                 
                 $dateTempFaturar        = strtotime($orcamento->Data_Finalizado." + ".$diasParaFaturarTemp."days");
                 $dateTempPagarParceiro  = strtotime($orcamento->Data_Finalizado." + ".$diasParaPagarParceiro."days");
 
                 $dataFaturamento        = date("Y-m-d H:i:s", $dateTempFaturar);
                 $dataPagamentoParceiro  = date("Y-m-d H:i:s", Orcamento::verificaPagamentoFimDeSemana($dateTempPagarParceiro));
-
-                $this->info('Data para faturar calculado : '. $dataFaturamento);
+                
 
                 //Data de fechamento do orçamento
                 $dataFechamentoOrc      = $orcamento->Data_Finalizado;
@@ -275,15 +269,15 @@ class verificaOrcamentosFechadosDia extends Command
                 {
                     // Endereço de envio de aviso de orçamentos definido via hardcoded
                     // Implementar uma forma de configurar endereço de email via sistema.
-                  
-                    //$message->to('sabine.trech@eficazsystem.com.br', 'finaceiro')
-                    
-                    $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'finaceiro')
+                    //$message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'finaceiro')
+
+
+                    $message->to('sabine.trech@eficazsystem.com.br', 'finaceiro')
                             ->from('noreply@sistema.eficazsystem.com.br')
                             ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
-                            //->cc('sistemaeficaz@sistema.eficazsystem.com.br', 'manutenção')
-                            //->cc('operador03@eficazsystem.com.br', 'Atendimento')
-                            //->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno');
+                            ->cc('sistemaeficaz@sistema.eficazsystem.com.br', 'manutenção')
+                            ->cc('operador03@eficazsystem.com.br', 'Atendimento')
+                            ->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno');
 
                     // $message->to('operador03@eficazsystem.com.br', 'Atendimento')
                     //         ->from('noreply@sistema.eficazsystem.com.br')

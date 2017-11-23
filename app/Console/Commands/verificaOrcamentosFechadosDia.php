@@ -100,6 +100,7 @@ class verificaOrcamentosFechadosDia extends Command
             foreach ($totalOrcamento as $orcamento) {
 
                 $diasParaFaturarTemp    = 30;
+                $diasParaPagarParceiro  = $diasParaFaturarTemp + 5;
                 $totalProposta          = 0;
                 $formaPagamento         = '';
                 

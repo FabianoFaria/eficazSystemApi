@@ -72,8 +72,8 @@ class verificaOrcamentosFechadosDia extends Command
                                     'tipo.Descr_Tipo AS Status'
                                 )
                                 ->where([
-                                    ['ow.Data_Finalizado','>=', '2017-11-16 00:00:00'],
-                                    ['ow.Data_Finalizado','<=', '2017-11-16 23:59:59'],
+                                    ['ow.Data_Finalizado','>=', '2017-11-23 00:00:00'],
+                                    ['ow.Data_Finalizado','<=', '2017-11-23 23:59:59'],
                                     ['ow.Situacao_ID','=','113']
                                 ])
                                 ->groupBy(

@@ -99,8 +99,9 @@ class verificaOrcamentosFechadosDia extends Command
 
             foreach ($totalOrcamento as $orcamento) {
 
-                $totalProposta  = 0;
-                $formaPagamento = '';
+                $diasParaFaturarTemp    = 30;
+                $totalProposta          = 0;
+                $formaPagamento         = '';
                 
                 $this->line('Orcamento ID '.$orcamento->Workflow_ID.' Cliente_nome : '.$orcamento->Nome.' Data finalizado: '.$orcamento->Data_Finalizado.' ');
 

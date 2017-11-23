@@ -72,8 +72,8 @@ class verificaOrcamentosFechadosDia extends Command
                                     'tipo.Descr_Tipo AS Status'
                                 )
                                 ->where([
-                                    ['ow.Data_Finalizado','>=', '2017-11-23 00:00:00'],
-                                    ['ow.Data_Finalizado','<=', '2017-11-23 23:59:59'],
+                                    ['ow.Data_Finalizado','>=', $hoje.':00:00'],
+                                    ['ow.Data_Finalizado','<=', $hoje.':59:59'],
                                     ['ow.Situacao_ID','=','113']
                                 ])
                                 ->groupBy(
@@ -356,15 +356,15 @@ class verificaOrcamentosFechadosDia extends Command
                         // Endereço de envio de aviso de orçamentos definido via hardcoded
                         // Implementar uma forma de configurar endereço de email via sistema.
                         //$message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'finaceiro')
+                        //$message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Teste')
 
                         // MENSAGEM FINAL
-                        //$message->to('sabine.trech@eficazsystem.com.br', 'finaceiro')
-                        $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Teste')
+                        $message->to('sabine.trech@eficazsystem.com.br', 'finaceiro')
                                 ->from('noreply@sistema.eficazsystem.com.br')
                                 ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
-                                //->cc('sistemaeficaz@sistema.eficazsystem.com.br', 'manutenção')
-                                //->cc('operador03@eficazsystem.com.br', 'Atendimento')
-                                //->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno');
+                                ->cc('sistemaeficaz@sistema.eficazsystem.com.br', 'manutenção')
+                                ->cc('operador03@eficazsystem.com.br', 'Atendimento')
+                                ->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno');
                      
 
                         // FIM DO EMAIL

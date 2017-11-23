@@ -57,7 +57,7 @@ class verificaOrcamentosFechadosDia extends Command
         // $this->error("Ops, that should not happen.");
 
         //$hoje = date('Y-m-d h');
-        $hoje = date('Y-m-d H', strtotime('-9 hour'));
+        $hoje = date('Y-m-d H', strtotime('-1 hour'));
 
         $totalOrcamento = DB::table('orcamentos_workflows AS ow')
                                 ->leftJoin('cadastros_dados AS cd', 'cd.Cadastro_ID', '=', 'ow.Solicitante_ID')
@@ -72,8 +72,8 @@ class verificaOrcamentosFechadosDia extends Command
                                     'tipo.Descr_Tipo AS Status'
                                 )
                                 ->where([
-                                    ['ow.Data_Finalizado','>=', $hoje.':00:00'],
-                                    ['ow.Data_Finalizado','<=', $hoje.':59:59'],
+                                    ['ow.Data_Finalizado','>=', '2017-11-16 00:00:00'],
+                                    ['ow.Data_Finalizado','<=', '2017-11-16 23:59:59'],
                                     ['ow.Situacao_ID','=','113']
                                 ])
                                 ->groupBy(
@@ -363,19 +363,7 @@ class verificaOrcamentosFechadosDia extends Command
                                 //->cc('sistemaeficaz@sistema.eficazsystem.com.br', 'manutenção')
                                 //->cc('operador03@eficazsystem.com.br', 'Atendimento')
                                 //->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno');
-
-                        // $message->to('operador03@eficazsystem.com.br', 'Atendimento')
-                        //         ->from('noreply@sistema.eficazsystem.com.br')
-                        //         ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
-
-                        // $message->to('fernanda.trech@eficazsystem.com.br', 'Atendiemtno')
-                        //         ->from('noreply@sistema.eficazsystem.com.br')
-                        //         ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
-
-                        // $message->to('fernanda.trech@eficazsystem.com.br', 'Atendiemtno')
-                        //         ->from('noreply@sistema.eficazsystem.com.br')
-                        //         ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !');
-
+                     
 
                         // FIM DO EMAIL
                     });

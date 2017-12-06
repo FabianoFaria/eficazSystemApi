@@ -355,16 +355,17 @@ class verificaOrcamentosFechadosDia extends Command
                     {
                         // Endereço de envio de aviso de orçamentos definido via hardcoded
                         // Implementar uma forma de configurar endereço de email via sistema.
-                        //$message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'finaceiro')
+                        //$message->to('sabine.trech@eficazsystem.com.br', 'finaceiro')
                         //$message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Teste')
 
                         // MENSAGEM FINAL
-                        $message->to('sabine.trech@eficazsystem.com.br', 'finaceiro')
+                        $message->to('financeiro@sistema.eficazsystem.com.br', 'Finaceiro')
                                 ->from('noreply@sistema.eficazsystem.com.br')
                                 ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !')
                                 ->cc('sistemaeficaz@sistema.eficazsystem.com.br', 'manutenção')
                                 ->cc('operador03@eficazsystem.com.br', 'Atendimento')
                                 ->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno');
+                                ->cc('allan.lima@sistema.eficazsystem.com.br', 'Gerencia');
                      
 
                         // FIM DO EMAIL

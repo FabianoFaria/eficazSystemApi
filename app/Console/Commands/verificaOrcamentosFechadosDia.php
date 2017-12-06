@@ -364,10 +364,9 @@ class verificaOrcamentosFechadosDia extends Command
                                 ->subject('Orçamentos fechados EficazSystem,'.$dadosCliente['nomeCliente'].' !')
                                 ->cc('sistemaeficaz@sistema.eficazsystem.com.br', 'manutenção')
                                 ->cc('operador03@eficazsystem.com.br', 'Atendimento')
-                                ->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno');
+                                ->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno')
                                 ->cc('allan.lima@sistema.eficazsystem.com.br', 'Gerencia');
                      
-
                         // FIM DO EMAIL
                     });
 

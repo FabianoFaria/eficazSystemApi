@@ -195,15 +195,24 @@ class verificaOrcamentosFechadosDia extends Command
 
                         if(!empty($prazosValoresProposta)){
 
+                            $totalTemp = 0;
+
                             foreach ($prazosValoresProposta as $prazos) {
 
                                 $this->info('Datas para vencimento : '. $prazos->Data_Vencimento .' Dias para pagar :'.$prazos->Dias_Vencimento.' Valor do venciamento :'. $prazos->Valor_Vencimento);
 
                                 $diasParaFaturarTemp    = $prazos->Dias_Vencimento;
                                 $diasParaPagarParceiro  = $prazos->Dias_Vencimento + 5;
+
+                                /* 
+                                CASO UMA FORMA DE PAGAMANTO TENHA SIDO ESPECIFICADA
+                                ESSA VARIAVEL IRÁ CARREGAR O VALOR REAL QUE PODE CONTER 
+                                O VALOR COM ALGUM DESCONTO OU ACRESCIMENTO 
+                                */
+                                $totalTemp              = $totalTemp + $prazos->Valor_Vencimento;
                             }
 
-
+                            $totalProposta = $totalTemp;
 
                         }else{
 
@@ -365,7 +374,7 @@ class verificaOrcamentosFechadosDia extends Command
                                 ->subject('Orçamentos aprovados EficazSystem,'.$dadosCliente['nomeCliente'].' !')
                                 ->cc('sistemaeficaz@sistema.eficazsystem.com.br', 'manutenção')
                                 ->cc('operador03@eficazsystem.com.br', 'Atendimento')
-                                ->cc('fernanda.trech@eficazsystem.com.br', 'Atendiemtno')
+                                ->cc('fernanda.trech@eficazsystem.com.br', 'Atendimento')
                                 ->cc('mara.lima@sistema.eficazsystem.com.br ', 'Compras')
                                 ->cc('labeficaz@sistema.eficazsystem.com.br', 'Laboratorio')
                                 ->cc('projetos@sistema.eficazsystem.com.br', 'Laboratorio');

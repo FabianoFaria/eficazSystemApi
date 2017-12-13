@@ -12,18 +12,18 @@
 
         	<td style="padding: 40px; text-align: left; font-family: sans-serif; font-size: 15px; mso-height-rule: exactly; line-height: 20px; color: #555555;">
 
-        		<h3>Olá Financeiro</h3>
+        		<h3>Olá </h3>
 
         		@if( $dadosVendedor['nomeFantasiaCliente'] != '')
 
     				<p>
-	        			Foi concluído um orçamento para o cliente : {{ $dadosVendedor['nomeFantasiaCliente'] }}
+	        			Foi aprovado um orçamento para o cliente : {{ $dadosVendedor['nomeFantasiaCliente'] }}
 	        		</p>
 
     			@else
 
     				<p>
-	        			Foi concluído um orçamento para o cliente : {{ $dadosVendedor['nomeCliente'] }}
+	        			Foi aprovado um orçamento para o cliente : {{ $dadosVendedor['nomeCliente'] }}
 	        		</p>
 
     			@endif
@@ -120,12 +120,12 @@
     			@if(!empty($dadosVendedor['dadosParceiro']))
 
 
-    				<h3>
+    				<!-- <h3>
     					Dados do parceiro e valor da comissão :
-    				</h3>
+    				</h3> -->
 
 
-    				<table width="100%">
+    				<!-- <table width="100%">
 
     					<thead>
 			                <tr>
@@ -156,9 +156,9 @@
 			            	</tr>
 			            </tbody>
 
-    				</table>
+    				</table> -->
 
-    				<table width="100%">
+    				<!-- <table width="100%">
 
     					<thead>
 			                <tr>
@@ -197,9 +197,9 @@
 			                </tr>
 			            </tbody>
 
-    				</table>
+    				</table> -->
 
-    				<table width="100%">
+    				<!-- <table width="100%">
 
     					<thead>
 			                <tr>
@@ -220,7 +220,7 @@
 			            		</td>
 			            	</tr>
 			            </tbody>
-    				</table>
+    				</table> -->
 
     				<hr>
 

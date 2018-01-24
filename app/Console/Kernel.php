@@ -14,7 +14,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
-        Commands\verificaOrcamentosFechadosDia::class
+        Commands\verificaOrcamentosFechadosDia::class,
+        Commands\verificaContasVencendoDia::class,
+        Commands\SituacaoOrcamentos::class
     ];
 
     /**

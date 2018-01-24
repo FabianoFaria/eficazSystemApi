@@ -49,7 +49,7 @@ class verificaOrcamentosFechadosDia extends Command
     public function handle()
     {
         //
-        $this->line("Listando os orçamentos que foram fechados hoje, aguarde um instante...");
+        $this->line("Listando os orçamentos que foram aprovados hoje, aguarde um instante...");
         // $this->line("Some text");
         // $this->info("Hey, watch this !");
         // $this->comment("Just a comment passing by");

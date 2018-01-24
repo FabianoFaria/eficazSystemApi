@@ -293,7 +293,7 @@ class SituacaoOrcamentos extends Command
                   // MENSAGEM FINAL
                   $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Manutenção')
                     ->from('noreply@sistema.eficazsystem.com.br')
-                    ->subject('Situação dos últimos orçamento da Eficaz System.')
+                    ->subject('Situação dos últimos orçamento da Eficaz System.');
                   // FIM DO EMAIL
 
                 }

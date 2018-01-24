@@ -41,7 +41,7 @@
 				        		<tr>
 
 				        			<td>
-				                        <a href="http://areatecnica.eficazsystem.com.br/orcamentos/{{ $orcamento['orcamento']->Workflow_ID) }}" class=""> 
+				                        <a href="http://areatecnica.eficazsystem.com.br/orcamentos/{{ $orcamento['orcamento']->Workflow_ID }}" class=""> 
 				                        	{{ $orcamento['orcamento']->Workflow_ID }} 
 				                        </a>
 				                    </td>
@@ -124,7 +124,7 @@
 
 				        		</tr>
 
-				        	@endforeah
+				        	@endforeach
 
 				        </tbody>
 

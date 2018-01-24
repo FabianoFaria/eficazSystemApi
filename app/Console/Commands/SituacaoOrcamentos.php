@@ -287,16 +287,16 @@ class SituacaoOrcamentos extends Command
                 //$dados = array('dadosOrcamentos' => $dadosOrcamentos);
 
                 // //Teste de envio de email para parceiro recem cadastrado
-                Mail::send('emails.aviso_situcao_orcamento', $dadosOrcamentos, function($message) use ($dadosCliente)
+                 Mail::send('emails.aviso_situacao_orcamento', $dadosOrcamentos, function($message) use ($dadosOrcamentos)
                 {
 
-                  // MENSAGEM FINAL
+                //   // MENSAGEM FINAL
                   $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Manutenção')
                     ->from('noreply@sistema.eficazsystem.com.br')
                     ->subject('Situação dos últimos orçamento da Eficaz System.');
-                  // FIM DO EMAIL
+                //   // FIM DO EMAIL
 
-                }
+                });
 
             }
 

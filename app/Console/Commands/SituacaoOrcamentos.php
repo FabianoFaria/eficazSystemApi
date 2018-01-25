@@ -63,36 +63,36 @@ class SituacaoOrcamentos extends Command
 
         if(! empty($orcamentos)){
 
-            foreach ($orcamentos as $orcamento) {
+          foreach ($orcamentos as $orcamento) {
 
-                $workflowID = $orcamento->Workflow_ID;
+            $workflowID = $orcamento->Workflow_ID;
 
-                //USANDO explode() POIS UNSERIALIZED ESTÁ CAUSANDO ERRO
+            //USANDO explode() POIS UNSERIALIZED ESTÁ CAUSANDO ERRO
 
-                $temp       = explode('cor-fundo";s:7:', $orcamento->Tipo_Auxiliar);
+            $temp       = explode('cor-fundo";s:7:', $orcamento->Tipo_Auxiliar);
 
-                $parte      = substr($temp[1], 1, 7);
+            $parte      = substr($temp[1], 1, 7);
 
-                //var_dump($temp);
+            //var_dump($temp);
 
-                $corSituacao  = $parte;
+            $corSituacao  = $parte;
 
-                //Carregando as propostas contidas no orçamento
+            //Carregando as propostas contidas no orçamento
 
-                $propostasOrcamento = DB::select('SELECT op.Proposta_ID,
-                                                        op.Workflow_ID,
-                                                        op.Titulo,
-                                                        op.Data_Cadastro,
-                                                        op.Usuario_Cadastro_ID,
-                                                        u.Nome AS Usuario,
-                                                        SUM(opp.Quantidade) as Quantidade_Total_Proposta,
-                                                        SUM(opp.Quantidade * opp.Valor_Venda_Unitario) as Valor_Total_Proposta,
-                                                        count(opp.Proposta_Produto_ID) as Total_Itens_Proposta,
-                                                        op.Status_ID as Status_ID,
-                                                        upper(t.Descr_Tipo) as Status,
-                                                        ow.Situacao_ID as Situacao_ID,
-                                                        fc.Descr_Tipo as Forma_Cobranca,
-                                                        fc.Tipo_Auxiliar as Detalhe_Cobranca
+            $propostasOrcamento = DB::select('SELECT op.Proposta_ID,
+                                                      op.Workflow_ID,
+                                                      op.Titulo,
+                                                      op.Data_Cadastro,
+                                                      op.Usuario_Cadastro_ID,
+                                                      u.Nome AS Usuario,
+                                                      SUM(opp.Quantidade) as Quantidade_Total_Proposta,
+                                                      SUM(opp.Quantidade * opp.Valor_Venda_Unitario) as Valor_Total_Proposta,
+                                                      count(opp.Proposta_Produto_ID) as Total_Itens_Proposta,
+                                                      op.Status_ID as Status_ID,
+                                                      upper(t.Descr_Tipo) as Status,
+                                                      ow.Situacao_ID as Situacao_ID,
+                                                      fc.Descr_Tipo as Forma_Cobranca,
+                                                      c.Tipo_Auxiliar as Detalhe_Cobranca
                                                     FROM orcamentos_propostas op
                                                     INNER JOIN orcamentos_workflows ow on ow.Workflow_ID = op.Workflow_ID
                                                     LEFT JOIN produtos_tabelas_precos tp on tp.Tabela_Preco_ID = op.Tabela_Preco_ID
@@ -104,203 +104,188 @@ class SituacaoOrcamentos extends Command
                                                     GROUP BY op.Proposta_ID, op.Workflow_ID, op.Titulo, op.Data_Cadastro, op.Usuario_Cadastro_ID, u.Nome, op.Status_ID, t.Descr_Tipo, ow.Situacao_ID, fc.Descr_Tipo, fc.Tipo_Auxiliar
                                                      ', [$workflowID]);
 
-                if(!empty($propostasOrcamento)){
+            if(!empty($propostasOrcamento)){
 
-                    foreach ($propostasOrcamento as $propostas) {
+              foreach ($propostasOrcamento as $propostas){
 
-                        $totalProdutosFaturar   = 0;
-                        $totalProdutoDespesa    = 0;
-                        $totalGastoCampo        = 0;
+                $totalProdutosFaturar   = 0;
+                $totalProdutoDespesa    = 0;
+                $totalGastoCampo        = 0;
 
-                        //RECUPERA A FORMA DE PAGAMENTO DA PROPOSTA PARA CALCULAR O VALOR COBRADO
-                        $formaPagamento         = unserialize($propostas->Detalhe_Cobranca);
+                //RECUPERA A FORMA DE PAGAMENTO DA PROPOSTA PARA CALCULAR O VALOR COBRADO
+                $formaPagamento         = unserialize($propostas->Detalhe_Cobranca);
 
-                        if(!empty($formaPagamento['tipo-bonus-disponivel'])){
+                if(!empty($formaPagamento['tipo-bonus-disponivel'])){
 
-                            $tipoModificacao        = $formaPagamento['tipo-bonus-disponivel'];
-                            $bonusModificacao       = $formaPagamento['valor_modificado'];
+                  $tipoModificacao        = $formaPagamento['tipo-bonus-disponivel'];
+                  $bonusModificacao       = $formaPagamento['valor_modificado'];
 
-                        }else{
-                            $tipoModificacao        = 'Desconto';
-                            $bonusModificacao       = 0;
-                        }
+                }else{
+                  $tipoModificacao        = 'Desconto';
+                  $bonusModificacao       = 0;
+                }
 
 
-                        $produtosPropostas          = DB::select("SELECT 
-                                                                    opp.Proposta_Produto_ID as Chave_Primaria_ID,
-                                                                    pv.Produto_Variacao_ID,
-                                                                    CONCAT(COALESCE(pd.Nome,''),
-                                                                    ' ',
-                                                                    COALESCE(pv.Descricao,'')) AS Descricao_Produto,
-                                                                    opp.Observacao_Produtos,
-                                                                    opp.Valor_Venda_Unitario, 
-                                                                    opp.Valor_Custo_Unitario, 
-                                                                    opp.Faturamento_Direto,
-                                                                    opp.Prestador_ID, 
-                                                                    re.Nome as Prestador,
-                                                                    opp.Cliente_Final_ID, 
-                                                                    cf.Nome as Cliente_Final,
-                                                                    cf.Foto as Foto_Cliente_Final,
-                                                                    opp.Quantidade as Quantidade, 
-                                                                    opp.Cobranca_Cliente, 
-                                                                    opp.Pagamento_Prestador,
-                                                                    opp.Data_Cadastro, 
-                                                                    cd.Nome as Autor,
-                                                                    ma.Nome_Arquivo as Nome_Arquivo, 
-                                                                    tp.Descr_Tipo as Tipo, 
-                                                                    fc.Descr_Tipo as Forma_Cobranca,
-                                                                    op.Proposta_ID as Proposta_ID,
-                                                                    pd.Produto_ID as Produto_ID, 
-                                                                    ow.Solicitante_ID as Solicitante_ID,
-                                                                    op.Forma_Pagamento_ID as Forma_Pagamento_ID
-                                                                  FROM orcamentos_propostas_produtos opp
-                                                                  INNER JOIN orcamentos_propostas op ON op.Proposta_ID = opp.Proposta_ID
-                                                                  INNER JOIN orcamentos_workflows ow on ow.Workflow_ID = op.Workflow_ID
-                                                                  INNER JOIN produtos_variacoes pv ON pv.Produto_Variacao_ID = opp.Produto_Variacao_ID
-                                                                  INNER JOIN produtos_dados pd ON pd.Produto_ID = pv.Produto_ID
-                                                                  INNER JOIN tipo tp ON tp.Tipo_ID = pd.Tipo_Produto
-                                                                  INNER JOIN tipo fc ON fc.Tipo_ID = pv.Forma_Cobranca_ID
-                                                                  LEFT JOIN modulos_anexos ma ON ma.Anexo_ID = pv.Imagem_ID
-                                                                  LEFT JOIN cadastros_dados cd ON cd.Cadastro_ID = opp.Usuario_Cadastro_ID
-                                                                  LEFT JOIN cadastros_dados re ON re.Cadastro_ID = opp.Prestador_ID
-                                                                  LEFT JOIN cadastros_dados cf ON cf.Cadastro_ID = opp.Cliente_Final_ID
-                                                                  WHERE opp.Proposta_ID = ? AND opp.Situacao_ID = 1
-                                                                  ORDER BY opp.Data_Cadastro DESC
-                                                                  ", [$propostas->Proposta_ID]);
+                $produtosPropostas          = DB::select("SELECT 
+                                                          opp.Proposta_Produto_ID as Chave_Primaria_ID,
+                                                          pv.Produto_Variacao_ID,
+                                                          CONCAT(COALESCE(pd.Nome,''),
+                                                          ' ',
+                                                          COALESCE(pv.Descricao,'')) AS Descricao_Produto,
+                                                          opp.Observacao_Produtos,
+                                                          opp.Valor_Venda_Unitario, 
+                                                          opp.Valor_Custo_Unitario, 
+                                                          opp.Faturamento_Direto,
+                                                          opp.Prestador_ID, 
+                                                          re.Nome as Prestador,
+                                                          opp.Cliente_Final_ID, 
+                                                          cf.Nome as Cliente_Final,
+                                                          cf.Foto as Foto_Cliente_Final,
+                                                          opp.Quantidade as Quantidade, 
+                                                          opp.Cobranca_Cliente, 
+                                                          opp.Pagamento_Prestador,
+                                                          opp.Data_Cadastro, 
+                                                          cd.Nome as Autor,
+                                                          ma.Nome_Arquivo as Nome_Arquivo, 
+                                                          tp.Descr_Tipo as Tipo, 
+                                                          fc.Descr_Tipo as Forma_Cobranca,
+                                                          op.Proposta_ID as Proposta_ID,
+                                                          pd.Produto_ID as Produto_ID, 
+                                                          ow.Solicitante_ID as Solicitante_ID,
+                                                          op.Forma_Pagamento_ID as Forma_Pagamento_ID
+                                                          FROM orcamentos_propostas_produtos opp
+                                                          INNER JOIN orcamentos_propostas op ON op.Proposta_ID = opp.Proposta_ID
+                                                          INNER JOIN orcamentos_workflows ow on ow.Workflow_ID = op.Workflow_ID
+                                                          INNER JOIN produtos_variacoes pv ON pv.Produto_Variacao_ID = opp.Produto_Variacao_ID
+                                                          INNER JOIN produtos_dados pd ON pd.Produto_ID = pv.Produto_ID
+                                                          INNER JOIN tipo tp ON tp.Tipo_ID = pd.Tipo_Produto
+                                                          INNER JOIN tipo fc ON fc.Tipo_ID = pv.Forma_Cobranca_ID
+                                                          LEFT JOIN modulos_anexos ma ON ma.Anexo_ID = pv.Imagem_ID
+                                                          LEFT JOIN cadastros_dados cd ON cd.Cadastro_ID = opp.Usuario_Cadastro_ID
+                                                          LEFT JOIN cadastros_dados re ON re.Cadastro_ID = opp.Prestador_ID
+                                                          LEFT JOIN cadastros_dados cf ON cf.Cadastro_ID = opp.Cliente_Final_ID
+                                                          WHERE opp.Proposta_ID = ? AND opp.Situacao_ID = 1
+                                                          ORDER BY opp.Data_Cadastro DESC", 
+                                                          [$propostas->Proposta_ID]);
                         
-                        if(!empty($produtosPropostas)){
+                if(!empty($produtosPropostas)){
 
-                            foreach ($produtosPropostas as $produto) {
+                  foreach ($produtosPropostas as $produto) {
 
-                                //CONTABILIZA O TOTAL A SER COBRADO DO CLIENTE
-                                if($produto->Cobranca_Cliente == 1){
+                    //CONTABILIZA O TOTAL A SER COBRADO DO CLIENTE
+                    if($produto->Cobranca_Cliente == 1){
 
-                                    $precoTotal  = $produto->Quantidade * $produto->Valor_Venda_Unitario;
+                      $precoTotal  = $produto->Quantidade * $produto->Valor_Venda_Unitario;
 
-                                    //PRODUTO SERÁ FATURADO DO CLIENTE
-                                    $totalProdutosFaturar = $totalProdutosFaturar + $precoTotal;
-
-                                }
-                                  
-                                //VERIFICA SE O PRODUTO É UMA DESPESA
-                                if($produto->Pagamento_Prestador == 1){
-
-                                    //PRODUTO É UMA DESPESA
-                                    $precoTotal  = $produto->Quantidade * $produto->Valor_Custo_Unitario;
-
-                                    //PRODUTO SERÁ FATURADO DO CLIENTE
-                                    $totalProdutoDespesa = $totalProdutoDespesa + $precoTotal;
-
-                                }
-                                //var_dump($produto->Pagamento_Prestador);
-
-                            }
-
-                        }
-
-
-                        //CARREGA O(S) CHAMADO(S) DO ORÇAMENTO
-
-                        $chamadoOrcamentos = DB::select('SELECT cw.Workflow_ID as Chamado_ID
-                                                          FROM orcamentos_chamados oc
-                                                          INNER JOIN chamados_workflows cw on cw.Workflow_ID = oc.Chamado_ID
-                                                          WHERE oc.Orcamento_ID = ? 
-                                                          AND oc.Situacao_ID = 1', [$workflowID]
-                                                        );
-
-                        if(!empty($chamadoOrcamentos)){
-
-                          foreach ($chamadoOrcamentos as $chamado) {
-                            //echo $chamado->Chamado_ID;
-
-                            $produtosChamado = DB::select('SELECT Workflow_ID,
-                                                            Quantidade,
-                                                            Valor_Custo_Unitario,
-                                                            Cobranca_Cliente,
-                                                            Situacao_ID
-                                                            FROM chamados_workflows_produtos
-                                                            WHERE Workflow_ID = ? AND Situacao_ID = 1',[$chamado->Chamado_ID]);
-
-                            if(!empty($produtosChamado)){
-
-                              foreach ($produtosChamado as $produto) {
-                                
-                                if($produto->Situacao_ID == 1){
-
-                                  $totalGastoCampo = $totalGastoCampo + ($produto->Quantidade * $produto->Valor_Custo_Unitario);
-
-                                }
-
-
-                              }
-
-                            }
-
-
-                          }
-
-                        }else{
-
-                          $totalGastoCampo = 0;
-
-                        }
-
-                        //$faturamento   =  $totalProdutosFaturar;
-                        $gastos        =  $totalProdutoDespesa + $totalGastoCampo;
-
-                        //CONTABILIZAR OS VALORES DE DESCONTO OU ACRESCIMO NO TOTAL DE PRODUTOS  
-
-                        $totalModificado = ($totalProdutosFaturar / 100) * $bonusModificacao;
-
-
-                        if($tipoModificacao == 'Desconto'){
-
-                          $faturamento   =  $totalProdutosFaturar - $totalModificado;
-
-                        }else{
-
-                          $faturamento   =  $totalProdutosFaturar + $totalModificado;
-
-                        }
-
-
-                        $faturamento   =  'Não definido';
-                        
-                        //Carrega os gastos efetuados com o orçamento
-                        $gastos        =  'Não definido';
+                      //PRODUTO SERÁ FATURADO DO CLIENTE
+                      $totalProdutosFaturar = $totalProdutosFaturar + $precoTotal;
 
                     }
+                                  
+                    //VERIFICA SE O PRODUTO É UMA DESPESA
+                    if($produto->Pagamento_Prestador == 1){
 
-                     $orcamentoCompleto = array('orcamento'      => $orcamento,
-                                            'faturamento'   => $faturamento,
-                                            'gastos'        => $gastos,
-                                            'situacaoCor'   => $corSituacao
-                                            );  
+                      //PRODUTO É UMA DESPESA
+                      $precoTotal  = $produto->Quantidade * $produto->Valor_Custo_Unitario;
 
-                    array_push($dadosOrcamentos, $orcamentoCompleto);
+                      //PRODUTO SERÁ FATURADO DO CLIENTE
+                      $totalProdutoDespesa = $totalProdutoDespesa + $precoTotal;
+
+                    }
+                                //var_dump($produto->Pagamento_Prestador);
+
+                  }
 
                 }
+
+                //CARREGA O(S) CHAMADO(S) DO ORÇAMENTO
+
+                $chamadoOrcamentos = DB::select('SELECT cw.Workflow_ID as Chamado_ID
+                                                  FROM orcamentos_chamados oc
+                                                  INNER JOIN chamados_workflows cw on cw.Workflow_ID = oc.Chamado_ID
+                                                  WHERE oc.Orcamento_ID = ? 
+                                                  AND oc.Situacao_ID = 1', [$workflowID]
+                                                );
+
+                if(!empty($chamadoOrcamentos)){
+
+                  foreach ($chamadoOrcamentos as $chamado) {
+                    //echo $chamado->Chamado_ID;
+
+                    $produtosChamado = DB::select('SELECT Workflow_ID,
+                                                          Quantidade,
+                                                          Valor_Custo_Unitario,
+                                                          Cobranca_Cliente,
+                                                          Situacao_ID
+                                                    FROM chamados_workflows_produtos
+                                                    WHERE Workflow_ID = ? AND Situacao_ID = 1',
+                                                    [$chamado->Chamado_ID]);
+
+                    if(!empty($produtosChamado)){
+
+                      foreach ($produtosChamado as $produto) {
+                                
+                        if($produto->Situacao_ID == 1){
+                          $totalGastoCampo = $totalGastoCampo + ($produto->Quantidade * $produto->Valor_Custo_Unitario);
+                        }
+                      }
+                    }
+                  }
+
+                }else{
+                  $totalGastoCampo = 0;
+                }
+
+                //$faturamento   =  $totalProdutosFaturar;
+                $gastos        =  $totalProdutoDespesa + $totalGastoCampo;
+
+                //CONTABILIZAR OS VALORES DE DESCONTO OU ACRESCIMO NO TOTAL DE PRODUTOS  
+
+                $totalModificado = ($totalProdutosFaturar / 100) * $bonusModificacao;
+
+                if($tipoModificacao == 'Desconto'){
+                  $faturamento   =  $totalProdutosFaturar - $totalModificado;
+                }else{
+                  $faturamento   =  $totalProdutosFaturar + $totalModificado;
+                }
+
+
+                $faturamento   =  'Não definido';
+                        
+                //Carrega os gastos efetuados com o orçamento
+                $gastos        =  'Não definido';
+
+              }
+
+              $orcamentoCompleto = array('orcamento'      => $orcamento,
+                                          'faturamento'   => $faturamento,
+                                          'gastos'        => $gastos,
+                                          'situacaoCor'   => $corSituacao
+                                        );  
+              array_push($dadosOrcamentos, $orcamentoCompleto);
+            }
 
                 //var_dump($faturamento);
                 //dd($dadosOrcamentos);
                 //var_dump($dadosOrcamentos);
-                //$dados = array('dadosOrcamentos' => $dadosOrcamentos);
+                //$dados = array('dadosOrcamentos' => $dadosOrcamentos);    
+          }
 
-                // //Teste de envio de email para parceiro recem cadastrado
-                 Mail::send('emails.aviso_situacao_orcamento', $dadosOrcamentos, function($message) use ($dadosOrcamentos)
-                {
+          // //Teste de envio de email para parceiro recem cadastrado
+          Mail::send('emails.aviso_situacao_orcamento', $dadosOrcamentos, function($message) use ($dadosOrcamentos)
+          {
 
-                //   // MENSAGEM FINAL
-                  $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Manutenção')
+            //   
+            // MENSAGEM FINAL
+            $message->to('sistemaeficaz@sistema.eficazsystem.com.br', 'Manutenção')
                     ->from('noreply@sistema.eficazsystem.com.br')
                     ->subject('Situação dos últimos orçamento da Eficaz System.');
-                //   // FIM DO EMAIL
+            //   
+            // FIM DO EMAIL
 
-                });
+          });
 
-            }
-
-            $this->info('Todos os orcamentos foram carregados com sucesso!');
+          $this->info('Todos os orcamentos foram carregados com sucesso!');
 
         }else{
 

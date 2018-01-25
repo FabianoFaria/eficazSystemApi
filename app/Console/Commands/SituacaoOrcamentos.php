@@ -92,7 +92,7 @@ class SituacaoOrcamentos extends Command
                                                       upper(t.Descr_Tipo) as Status,
                                                       ow.Situacao_ID as Situacao_ID,
                                                       fc.Descr_Tipo as Forma_Cobranca,
-                                                      c.Tipo_Auxiliar as Detalhe_Cobranca
+                                                      fc.Tipo_Auxiliar as Detalhe_Cobranca
                                                     FROM orcamentos_propostas op
                                                     INNER JOIN orcamentos_workflows ow on ow.Workflow_ID = op.Workflow_ID
                                                     LEFT JOIN produtos_tabelas_precos tp on tp.Tabela_Preco_ID = op.Tabela_Preco_ID
